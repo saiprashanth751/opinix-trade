@@ -39,18 +39,20 @@ const Page = () => {
   const userId = "cm1r277l500178uzhh6kiewxa"; //data.user.id;
 
   useEffect(() => {
-    if (userId && !portfolioData) {
+    if (userId) {
       getPortfolioDetails(userId);
     }
-  }, [userId])
+  }, [userId]);
 
   async function getPortfolioDetails(userId: string) {
     setLoading(true);
     try {
       const portfolio = await getTrades(userId);
-      if(portfolio.success){
-        setPortfolioData(portfolio.trades!);
+      console.log(portfolio);
 
+      setPortfolioData(portfolio);
+      if (!portfolio) {
+        return;
       }
       const updatedTrades = await fetchTitles(portfolio.trades);
       setTradesWithTitles(updatedTrades);

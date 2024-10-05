@@ -85,6 +85,8 @@ model Trade {
   createdAt   DateTime  @default(now())
   event       Event     @relation(fields: [eventId], references: [id])
   portfolio   Portfolio @relation(fields: [portfolioId], references: [id])
+  status     TradeStatus @default(ACTIVE)
+  gainloss  Float?
 }
 
 model Payout {
@@ -128,8 +130,13 @@ enum PayoutStatus {
   COMPLETED
   FAILED
 }
+enum TradeStatus{
+  ACTIVE
+  PAST
+}
 
 enum OrderStatus {
   PENDING
   PLACED
 }
+
