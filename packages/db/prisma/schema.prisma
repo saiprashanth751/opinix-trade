@@ -60,8 +60,8 @@ model YesOrder {
   orderBookId String
   price       Float
   quantity    Int
-  status      OrderStatus
   createdAt   DateTime    @default(now())
+  status      OrderStatus
   orderBook   OrderBook   @relation(fields: [orderBookId], references: [id])
 }
 
@@ -70,23 +70,23 @@ model NoOrder {
   orderBookId String
   price       Float
   quantity    Int
-  status      OrderStatus
   createdAt   DateTime    @default(now())
+  status      OrderStatus
   orderBook   OrderBook   @relation(fields: [orderBookId], references: [id])
 }
 
 model Trade {
-  id          String    @id @default(cuid())
+  id          String      @id @default(cuid())
   portfolioId String
   eventId     String
   price       Float
   quantity    Int
   side        TradeSide
-  createdAt   DateTime  @default(now())
-  event       Event     @relation(fields: [eventId], references: [id])
-  portfolio   Portfolio @relation(fields: [portfolioId], references: [id])
-  status     TradeStatus @default(ACTIVE)
-  gainloss  Float?
+  createdAt   DateTime    @default(now())
+  gainloss    Float?      @default(0)
+  status      TradeStatus @default(ACTIVE)
+  event       Event       @relation(fields: [eventId], references: [id])
+  portfolio   Portfolio   @relation(fields: [portfolioId], references: [id])
 }
 
 model Payout {
@@ -101,13 +101,13 @@ model Payout {
 
 model OTP {
   id         String   @id @default(uuid())
-  otpID      String   @unique
+  userId     String?
   otp        String   @unique
   createdAt  DateTime @default(now())
   expiresAt  DateTime
+  otpID      String   @unique
   isVerified Boolean  @default(false)
   user       User?    @relation(fields: [userId], references: [id])
-  userId     String?
 }
 
 enum UserRole {
@@ -130,7 +130,8 @@ enum PayoutStatus {
   COMPLETED
   FAILED
 }
-enum TradeStatus{
+
+enum TradeStatus {
   ACTIVE
   PAST
 }

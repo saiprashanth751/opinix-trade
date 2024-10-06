@@ -174,13 +174,13 @@ export async function processOrder(
         },
       });
     }
-
+   const buyPrice = side === 'yes' ? orderbook.topYesPrice : orderbook.topNoPrice
     const tradeSide = side === "yes" ? "YES" : "NO";
     await prisma.trade.create({
       data: {
         portfolioId: portfolio?.id,
         eventId: orderbook.eventId,
-        price: Number(price),
+        price: Number(buyPrice),
         quantity: Number(quantity),
         side: tradeSide,
       },
@@ -275,6 +275,7 @@ export async function processOrder(
     const allTrades = await prisma.trade.findMany({
       where: {
         eventId: orderbook.eventId,
+        status : 'ACTIVE'
       },
     });
     for (const trade of allTrades) {

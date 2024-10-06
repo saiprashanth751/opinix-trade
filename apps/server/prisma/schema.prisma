@@ -86,7 +86,7 @@ model Trade {
   event       Event     @relation(fields: [eventId], references: [id])
   portfolio   Portfolio @relation(fields: [portfolioId], references: [id])
   status     TradeStatus @default(ACTIVE)
-  gainloss  Float?
+  gainloss  Float? @default(0)
 }
 
 model Payout {

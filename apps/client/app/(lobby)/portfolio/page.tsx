@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { getTrades } from "@/actions/Trade/getTrades";
 import Portfolio from "../../../components/landing/Portfolio";
 import { getEventDetails } from "@/actions/Event/getEventDetails";
-
+import axios from "axios";
 export interface Trade {
   id: string;
   createdAt: Date;
@@ -15,6 +15,8 @@ export interface Trade {
   quantity: number;
   side: "YES" | "NO";
   title?: string;
+  gainloss: number | null;
+  status : "ACTIVE"|"PAST"
 }
 export interface Portfolio {
   id: string;
@@ -36,7 +38,7 @@ const Page = () => {
       redirect("/api/auth/signin");
     }
   }, [data?.user]);
-  const userId = "cm1r277l500178uzhh6kiewxa"; //data.user.id;
+  const userId = "cm1r277l500178uzhh6kiewxa"; //data?.user.id;
 
   useEffect(() => {
     if (userId) {
@@ -74,8 +76,32 @@ const Page = () => {
     );
     return titles;
   }
-  const handleExit = () => {
-    window.alert("exited");
+  const handleExit = async (tradeId: string) => {
+    if (window.confirm("Are you sure you want to sell your order")) {
+      try {
+        const tradeToSell = tradesWithTitles.find(
+          (trade) => trade.id == tradeId
+        );
+        if (tradeToSell) {
+          const response = await axios.post(
+            "http://localhost:3001/v1/order/sell-order",
+            {
+              tradeId: tradeToSell.id,
+              eventId: tradeToSell.eventId,
+              price: tradeToSell.price,
+              quantity: tradeToSell.quantity,
+              side: tradeToSell.side == "YES" ? "yes" : "no",
+            }
+          );
+          window.alert(response.data.message || "Order sold successfully!");
+        } else {
+          window.alert("Trade not found.");
+        }
+      } catch (error) {
+        console.error("Error selling order", error);
+        window.alert("Failed to sell order.");
+      }
+    }
   };
   if (loading) {
     return <div>Loading...</div>;
@@ -96,6 +122,8 @@ const Page = () => {
           price: trade.price,
           quantity: trade.quantity,
           type: trade.side,
+          gainloss : trade.gainloss,
+          status :trade.status
         }))}
       />
     </div>

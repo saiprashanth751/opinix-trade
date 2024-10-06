@@ -11,7 +11,7 @@ const Page = () => {
   if(!data?.user){
     redirect("/api/auth/signin")
   }
-  const userId = data.user.id
+  
   return (
     <div className='h-[90vh] w-full flex justify-center items-center'>
         <DepositForm/>

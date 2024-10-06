@@ -103,6 +103,9 @@ router.post("/sell-order", async (req, res) => {
   if (!trade) {
     return res.status(400).json({ error: "No trade found" });
   }
+  if(trade.status != 'ACTIVE'){
+    return res.status(400).json({ error: "Trade is already been settled" });
+  }
   if (trade.event.status !== "ONGOING") {
     return res.status(400).json({ error: "Event is not ongoing" });
   }
@@ -122,6 +125,7 @@ router.post("/sell-order", async (req, res) => {
           no: true,
         },
       },
+      
     },
   });
   if (!orderbook?.orderBook) {
@@ -143,8 +147,11 @@ router.post("/sell-order", async (req, res) => {
     topPriceYes, 
     topPriceNo
   );
-
-  return res.json({ message: "Order processed successfully" });
+  
+if(!sellResult.success){
+  return res.json({ message: "Order can't be processed at the moment" });
+}
+return res.json({ message: "Order processed successfully" });
 });
 
 export default router;

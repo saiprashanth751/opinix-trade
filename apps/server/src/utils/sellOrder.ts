@@ -30,6 +30,7 @@ export async function sellOrder(
   for (let order of oppositeOrder) {
     if (order.quantity >= quantity) {
       order.quantity -= quantity;
+
       if (side === "yes") {
         await prisma.noOrder.update({
           where: {
@@ -41,7 +42,7 @@ export async function sellOrder(
             },
           },
         });
-      }else{
+      } else {
         await prisma.yesOrder.update({
           where: {
             id: order.id,
@@ -53,6 +54,17 @@ export async function sellOrder(
           },
         });
       }
+      const gainLoss = 10 * quantity - (price + order.price) * quantity;
+      await prisma.trade.update({
+        where: {
+          id: tradeId,
+        },
+        data: {
+          status: "PAST",
+          gainloss: gainLoss,
+        },
+      });
+
       WebsocketServer.broadcast(eventId, {
         orderBook: {
           yes: orderbook.yes.map((order) => ({
@@ -67,8 +79,33 @@ export async function sellOrder(
           topPriceNo: topPriceNo,
         },
       });
-      return;
+
+      const trade = await prisma.trade.findUnique({
+        where: {
+          id: tradeId,
+        },
+        include: {
+          portfolio: {
+            include: {
+              user: true,
+            },
+          },
+        },
+      });
+      await prisma.user.update({
+        where: {
+          id: trade?.portfolio.userId,
+        },
+        data: {
+          balance: order.price * quantity,
+        },
+      });
+
+      return { success: true, message: "Order executed successfully." };
     }
   }
- 
+  return {
+    success: false,
+    message: "Order execution failed: insufficient opposite orders.",
+  };
 }
