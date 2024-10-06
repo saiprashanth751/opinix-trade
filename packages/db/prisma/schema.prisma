@@ -13,22 +13,22 @@ model User {
   balance     Float      @default(0.0)
   role        UserRole
   createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  updatedAt   DateTime
+  Event       Event[]
+  OTP         OTP[]
+  Payout      Payout[]
   portfolio   Portfolio?
   events      Event[]    @relation("EventParticipants")
-  Event       Event[]
-  Payout      Payout[]
-  otp         OTP[]
 }
 
 model Portfolio {
   id              String   @id @default(cuid())
   userId          String   @unique
-  user            User     @relation(references: [id], fields: [userId])
-  trades          Trade[]
   currentBalances Float    @default(0.0)
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+  user            User     @relation(fields: [userId], references: [id])
+  trades          Trade[]
 }
 
 model Event {
@@ -36,74 +36,78 @@ model Event {
   title        String
   description  String
   adminId      String
-  admin        User        @relation(fields: [adminId], references: [id])
   status       EventStatus @default(ONGOING)
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
-  orderBook    OrderBook? // Each event has one order book
-  participants User[]      @relation("EventParticipants")
+  admin        User        @relation(fields: [adminId], references: [id])
+  orderBook    OrderBook?
   Trade        Trade[]
+  participants User[]      @relation("EventParticipants")
 }
 
 model OrderBook {
   id          String     @id @default(cuid())
   eventId     String     @unique
-  event       Event      @relation(references: [id], fields: [eventId])
   topPriceYes Float
   topPriceNo  Float
-  yes         YesOrder[]
   no          NoOrder[]
+  event       Event      @relation(fields: [eventId], references: [id])
+  yes         YesOrder[]
 }
 
 model YesOrder {
-  id          String    @id @default(cuid())
+  id          String      @id @default(cuid())
   orderBookId String
-  orderBook   OrderBook @relation(fields: [orderBookId], references: [id])
   price       Float
   quantity    Int
-  createdAt   DateTime  @default(now())
+  createdAt   DateTime    @default(now())
+  status      OrderStatus
+  orderBook   OrderBook   @relation(fields: [orderBookId], references: [id])
 }
 
 model NoOrder {
-  id          String    @id @default(cuid())
+  id          String      @id @default(cuid())
   orderBookId String
-  orderBook   OrderBook @relation(fields: [orderBookId], references: [id])
   price       Float
   quantity    Int
-  createdAt   DateTime  @default(now())
+  createdAt   DateTime    @default(now())
+  status      OrderStatus
+  orderBook   OrderBook   @relation(fields: [orderBookId], references: [id])
 }
 
 model Trade {
-  id          String    @id @default(cuid())
+  id          String      @id @default(cuid())
   portfolioId String
-  portfolio   Portfolio @relation(fields: [portfolioId], references: [id])
   eventId     String
-  event       Event     @relation(fields: [eventId], references: [id])
   price       Float
   quantity    Int
   side        TradeSide
-  createdAt   DateTime  @default(now())
+  createdAt   DateTime    @default(now())
+  gainloss    Float?      @default(0)
+  status      TradeStatus @default(ACTIVE)
+  event       Event       @relation(fields: [eventId], references: [id])
+  portfolio   Portfolio   @relation(fields: [portfolioId], references: [id])
 }
 
 model Payout {
   id        String       @id @default(cuid())
   userId    String
-  user      User         @relation(references: [id], fields: [userId])
   amount    Float
   status    PayoutStatus
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
+  user      User         @relation(fields: [userId], references: [id])
 }
 
 model OTP {
   id         String   @id @default(uuid())
-  otpID      String   @unique
+  userId     String?
   otp        String   @unique
   createdAt  DateTime @default(now())
   expiresAt  DateTime
+  otpID      String   @unique
   isVerified Boolean  @default(false)
   user       User?    @relation(fields: [userId], references: [id])
-  userId     String?
 }
 
 enum UserRole {
@@ -125,6 +129,11 @@ enum PayoutStatus {
   PENDING
   COMPLETED
   FAILED
+}
+
+enum TradeStatus {
+  ACTIVE
+  PAST
 }
 
 enum OrderStatus {

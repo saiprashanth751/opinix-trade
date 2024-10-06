@@ -60,7 +60,7 @@ router.post("/place-order", async (req, res) => {
       eventId: orderbook.eventId,
       topYesPrice: orderbook.topPriceYes,
       topNoPrice: orderbook.topPriceNo,
-      yes: orderbook.yes.map((order:any) => ({
+      yes: orderbook.yes.map((order: any) => ({
         price: order.price,
         quantity: order.quantity,
         id: order.id,
@@ -68,7 +68,7 @@ router.post("/place-order", async (req, res) => {
         orderBookId: order.orderBookId,
         status: order.status as OrderStatus,
       })),
-      no: orderbook.no.map((order:any) => ({
+      no: orderbook.no.map((order: any) => ({
         price: order.price,
         quantity: order.quantity,
         id: order.id,
@@ -103,8 +103,16 @@ router.post("/sell-order", async (req, res) => {
   if (!trade) {
     return res.status(400).json({ error: "No trade found" });
   }
+  if(trade.status != 'ACTIVE'){
+    return res.status(400).json({ error: "Trade is already been settled" });
+  }
   if (trade.event.status !== "ONGOING") {
     return res.status(400).json({ error: "Event is not ongoing" });
+  }
+  if (trade.price !== price || trade.quantity !== quantity) {
+    return res.status(400).json({
+      error: "Trade price or quantity does not match the stored trade data",
+    });
   }
   const orderbook = await prisma.event.findUnique({
     where: {
@@ -117,15 +125,33 @@ router.post("/sell-order", async (req, res) => {
           no: true,
         },
       },
+      
     },
   });
-  if(!orderbook?.orderBook){
-    return res.status(400).json({ error: "Order book not found for this event" });
+  if (!orderbook?.orderBook) {
+    return res
+      .status(400)
+      .json({ error: "Order book not found for this event" });
   }
-  // @ts-ignore
-  const sellResult = await sellOrder(tradeId, eventId, side, quantity, price , orderbook.orderBook);
-
-  return res.json({ message: "Order processed successfully" });
+ if(!orderbook.orderBook.topPriceNo || !orderbook.orderBook.topPriceYes){
+  return
+ }
+ const { topPriceYes, topPriceNo } = orderbook.orderBook;
+  const sellResult = await sellOrder(
+    tradeId,
+    eventId,
+    side,
+    quantity,
+    price,
+    orderbook.orderBook,
+    topPriceYes, 
+    topPriceNo
+  );
+  
+if(!sellResult.success){
+  return res.json({ message: "Order can't be processed at the moment" });
+}
+return res.json({ message: "Order processed successfully" });
 });
 
 export default router;

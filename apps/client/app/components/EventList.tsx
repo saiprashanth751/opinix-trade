@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import React, { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -14,26 +15,37 @@ interface Event {
 interface EventCardProps {
   event: Event;
 }
+const getRandomAvatar = (seed: string) =>
+  `https://api.dicebear.com/9.x/identicon/svg/${seed}`;
 
-const EventCard = ({ event }: EventCardProps) => (
-  <Card className="mb-4 bg-gray-800 text-white">
-    <CardContent className="p-4">
-      <div className="flex items-center space-x-4 mb-2">
-        <div className="flex-grow">
-          <Link href={`/event/${event.id}`}>
-            <h3 className="font-semibold text-sm">{event.title}</h3>
-          </Link>
+const EventCard = ({ event }: EventCardProps) => {
+  const avatarUrl = getRandomAvatar(event.id);
+
+  return (
+    <Card className="mb-4 bg-gray-800 text-white">
+      <CardContent className="p-4">
+        <div className="flex items-center space-x-4 mb-2">
+          <img
+            src={avatarUrl}
+            alt="Event Avatar"
+            className="w-12 h-12 rounded-full"
+          />
+          <div className="flex-grow">
+            <Link href={`/event/${event.id}`}>
+              <h3 className="font-semibold text-sm">{event.title}</h3>
+            </Link>
+          </div>
         </div>
-      </div>
-      <div className="flex justify-between mt-5">
-        <Button variant="default">Yes ₹</Button>
-        <Button variant="destructive" className="bg-red-600 hover:bg-red-700">
-          No ₹
-        </Button>
-      </div>
-    </CardContent>
-  </Card>
-);
+        <div className="flex justify-between mt-5">
+          <Button variant="default">Yes ₹</Button>
+          <Button variant="destructive" className="bg-red-600 hover:bg-red-700">
+            No ₹
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
 
 export default function EventList() {
   const [events, setEvents] = useState<Event[]>();

@@ -1,9 +1,11 @@
 "use server";
-import prisma from "@repo/db/client"
+import { Portfolio } from "@/app/(lobby)/portfolio/page";
+import prisma from "@repo/db/client";
+ 
 
-export async function getTrades(userId: string) {
+export async function getTrades(userId: string): Promise<Portfolio | null> {
   try {
-    const trades = await prisma.portfolio.findUnique({
+    const portfolio = await prisma.portfolio.findUnique({
       where: {
         userId: userId,
       },
@@ -11,12 +13,13 @@ export async function getTrades(userId: string) {
         trades: true,
       },
     });
-    if (!trades) {
-      return {success:true, trades};
-    }else{
-      return {success:false};
-    }
+
+    
+    return portfolio ? portfolio : null;
+    
   } catch (error) {
-    return {success:false};
+    console.error("Error fetching trades:", error);
+    return null; 
   }
 }
+

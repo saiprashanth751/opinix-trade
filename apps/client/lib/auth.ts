@@ -46,7 +46,7 @@ export const authOptions = {
             phoneNumber: credentials?.phoneNumber,
           },
           include: {
-            otp: {
+            OTP: {
               select: {
                 isVerified: true,
               },
@@ -55,14 +55,14 @@ export const authOptions = {
         });
 
         // if user is not verified by twillio
-        const isUserVerified = isUserExists?.otp[0].isVerified;
+        const isUserVerified = isUserExists?.OTP[0].isVerified;
         if(isUserExists){
           return {
             id: isUserExists?.id,
             phoneNumber: isUserExists?.phoneNumber,
             balance: isUserExists?.balance,
             role: isUserExists.role,
-            isVerified:isUserExists.otp[0].isVerified
+            isVerified:isUserExists.OTP[0].isVerified
           };
         }
 
@@ -71,6 +71,7 @@ export const authOptions = {
             phoneNumber: credentials?.phoneNumber as string,
             role: "USER",
             balance: 0.0,
+            updatedAt : Date()
           },
         });
         await prisma.oTP.update({
