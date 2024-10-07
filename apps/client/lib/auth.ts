@@ -53,16 +53,18 @@ export const authOptions = {
             },
           },
         });
-
+        console.log("isUserExists...", isUserExists);
+        
         // if user is not verified by twillio
         const isUserVerified = isUserExists?.OTP[0].isVerified;
+        
         if(isUserExists){
           return {
             id: isUserExists?.id,
             phoneNumber: isUserExists?.phoneNumber,
             balance: isUserExists?.balance,
             role: isUserExists.role,
-            isVerified:isUserExists.OTP[0].isVerified
+            isVerified:isUserVerified
           };
         }
 
@@ -71,7 +73,6 @@ export const authOptions = {
             phoneNumber: credentials?.phoneNumber as string,
             role: "USER",
             balance: 0.0,
-            updatedAt : Date()
           },
         });
         await prisma.oTP.update({
@@ -83,7 +84,7 @@ export const authOptions = {
         if (user) {
           return {
             ...user,
-            isVerified: isUserVerified,
+            isVerified: true,
           };
         } else {
           return null;
@@ -93,7 +94,8 @@ export const authOptions = {
   ],
   callbacks: {
     async signIn({ user, credentials }) {
-
+      console.log("Singin....", user);
+      
       if (!user.isVerified) {
         return false;
       }

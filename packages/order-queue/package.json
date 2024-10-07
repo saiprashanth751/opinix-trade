@@ -1,0 +1,12 @@
+{
+  "name": "@repo/order-queue",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "redis": "^4.7.0"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}

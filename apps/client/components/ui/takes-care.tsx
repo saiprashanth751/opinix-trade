@@ -1,9 +1,9 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
 interface whyChooseUsCardProps {
   title: string;
   description: string;
-  svg: any;
+  svg: ReactNode;
   reverse?: boolean;
 }
 

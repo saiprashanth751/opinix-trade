@@ -1,5 +1,5 @@
 import { WebsocketServer } from "../router/websockets";
-import prisma from "../utils/db";
+import prisma from "@repo/db/client";
 
 export async function updateOrderBook() {
   const onGoingEvents = await prisma.event.findMany({
