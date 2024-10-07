@@ -45,6 +45,8 @@ export function InputOTPForm({ phoneNumber }: InputOTPFormProps) {
     setIsLoading(true);
 
     const isVerified = await verifySMSOTPAction(data.otp, phoneNumber);
+    console.log(isVerified);
+    
     const res = await signIn("credentials", {
       redirect: false,
       phoneNumber,

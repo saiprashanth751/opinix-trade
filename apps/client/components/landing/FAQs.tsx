@@ -5,8 +5,6 @@ import {
     AccordionItem,
     AccordionTrigger,
   } from "../ui/accordion";
-  import Image from "next/image";
-  
   
   const FAQS = () => {
     return (
@@ -20,7 +18,7 @@ import {
           <h1 className=" lg:mt-8 mt-2 md:mt-0 md:-mb-8 font-bold text-transparent bg-clip-text bg-gradient-to-r from-zinc-200/60 via-zinc-200 to-zinc-200/60 flex justify-center w-full items-center gap-1 sm:gap-4 h-[5rem] md:h-[4rem] lg:h-[16rem] sm:text-[5rem] lg:text-[30px] xl:text-[50px] text-[2.2rem]">
             <span>F</span>
             <span>A</span>
-            <span>Q's</span>
+            <span>Qs</span>
           </h1>
         </div>
         <Accordion type="single" collapsible>
@@ -54,7 +52,7 @@ import {
               Will money withdrawals easy?
             </AccordionTrigger>
             <AccordionContent>
-            yes it's easy, just one click.
+            yes it is easy, just one click.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem

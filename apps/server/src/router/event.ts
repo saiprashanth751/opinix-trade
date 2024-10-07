@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { initializeOrderBook } from "../utils/marketMaker";
-import prisma from "../utils/db";
+import prisma from "@repo/db/client";
 import { WebsocketServer } from "./websockets";
 
 const router = Router();
