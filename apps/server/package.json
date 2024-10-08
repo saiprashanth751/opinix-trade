@@ -24,7 +24,7 @@
     "express": "^4.21.0",
     "jsonwebtoken": "^9.0.2",
     "prisma": "^5.20.0",
-    "ws": "^8.18.0"
+    "ws": "^7.5.5"
   },
   "devDependencies": {
     "esbuild": "0.24.0"
