@@ -1,0 +1,26 @@
+name: Deploy Express Backend
+
+on:
+  push:
+    paths:
+      - "apps/server/**"
+      - "packages/db/**"
+      - "packages/order-queue/**"
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: SSH and deploy
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          echo "$SSH_PRIVATE_KEY" > keyfile
+          chmod 600 keyfile
+          ssh -o StrictHostKeyChecking=no -t -i keyfile ubuntu@ec2-184-73-25-89.compute-1.amazonaws.com "sudo bash /home/ubuntu/offchain-orderbook/apps/server/deploy.sh"
