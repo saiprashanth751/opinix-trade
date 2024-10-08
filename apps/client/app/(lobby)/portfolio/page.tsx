@@ -38,7 +38,7 @@ const Page = () => {
       redirect("/api/auth/signin");
     }
   }, [data?.user]);
-  const userId = "cm1r277l500178uzhh6kiewxa"; //data?.user.id;
+  const userId = data?.user.id;
 
   useEffect(() => {
     if (userId) {

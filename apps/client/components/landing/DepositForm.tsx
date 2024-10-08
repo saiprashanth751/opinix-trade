@@ -41,7 +41,7 @@ const DepositForm = () => {
 
   async function handleRechageClick(){
     if(!data?.user)redirect("/api/auth/signin");
-    const userid =  "cm1r277l500178uzhh6kiewxa"//data.user.id;
+    const userid =  data.user.id;
     const isRechargeDone  = await DepositeMoneyInWallet(userid!, depositAmount);
     if(isRechargeDone?.success){
       toast.success("Recharge Success");
