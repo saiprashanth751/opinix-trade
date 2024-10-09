@@ -1,4 +1,4 @@
-import prisma from "../utils/db";
+import prisma from "@repo/db/client";
 
 export const getOrderBookForEvent = async (eventId: string) => {
   try {

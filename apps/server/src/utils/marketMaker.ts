@@ -1,8 +1,12 @@
-import { redisClient } from "../redis/redisClient";
+import { redisClient } from "@repo/order-queue";
 import { WebsocketServer } from "../router/websockets";
-
 import { updateOrderbookAfterBid } from "../services/updateOrderBookForBids";
-import prisma from "./db";
+import prisma from "@repo/db/client";
+
+
+redisClient.connect().then(()=>{
+  console.log("Connected to redisclient");
+});
 
 interface Order {
   price: number;
@@ -99,12 +103,12 @@ export async function queuePlacedOrder(
   quantity: number
 ) {
   const order = JSON.stringify({ userId, side, price, quantity });
-  await redisClient.lpush("placedOrderQueue", order);
+  await redisClient.lPush("placedOrderQueue", order);
   console.log(`Placed order queued: ${order}`);
 }
 
 export async function executePlacedOrder(orderbook: OrderbookForOrders) {
-  let order = await redisClient.rpop("placedOrderQueue");
+  let order = await redisClient.rPop("placedOrderQueue");
   while (order) {
     const parsedOrder = JSON.parse(order);
     const topPrice =
@@ -125,7 +129,7 @@ export async function executePlacedOrder(orderbook: OrderbookForOrders) {
         orderbook
       );
     }
-    order = await redisClient.rpop("placedOrderQueue");
+    order = await redisClient.rPop("placedOrderQueue");
   }
 }
 
@@ -303,11 +307,11 @@ async function queueOrder(
   quantity: number
 ) {
   const order = JSON.stringify({ userId, side, price, quantity });
-  await redisClient.lpush("orderQueue", order);
+  await redisClient.lPush("orderQueue", order);
   console.log(`Order queued: ${order}`);
 }
 async function checkAndExecuteQueueOrders(orderbook: OrderbookForOrders) {
-  let order = await redisClient.rpop("orderQueue");
+  let order = await redisClient.rPop("orderQueue");
   while (order) {
     console.log(`Popped order from queue: ${order}`);
     const parsedOrder = JSON.parse(order);
@@ -322,223 +326,8 @@ async function checkAndExecuteQueueOrders(orderbook: OrderbookForOrders) {
         orderbook
       );
     } else {
-      redisClient.lpush("orderQueue", order);
+      redisClient.lPush("orderQueue", order);
     }
-    order = await redisClient.rpop("orderQueue");
+    order = await redisClient.rPop("orderQueue");
   }
 }
-
-// export const processOrder = (
-//   side: "yes" | "no",
-//   quantity: number,
-//   price: number,
-//   orderBook : any
-// ) => {
-
-//   if (side === "yes") {
-
-//     if (price < orderBook.topYesPrice) {
-//       return {
-//         success: false,
-//         message: "Invalid request: Price is lower than the top price for Yes.",
-//       };
-//     }
-
-//     let remainingQty = quantity;
-//     let currentPrice = orderBook.topYesPrice;
-
-//     while (remainingQty > 0 && currentPrice <= price) {
-//       const currentOrder = orderBook.yes.find((order) => order.price === currentPrice);
-//       if (currentOrder && currentOrder.quantity > 0) {
-//         const qtyToFill = Math.min(currentOrder.quantity, remainingQty);
-//         currentOrder.quantity -= qtyToFill;
-//         remainingQty -= qtyToFill;
-
-//         if (currentOrder.quantity === 0) {
-//           currentPrice += 0.5;
-//         }
-//       } else {
-//         currentPrice += 0.5;
-//       }
-//     }
-
-//     const nextTopYes = orderBook.yes.find((order) => order.quantity > 0);
-//     if (nextTopYes) {
-//       orderBook.topYesPrice = nextTopYes.price;
-//     } else {
-//       orderBook.topYesPrice = 9.5;
-//     }
-
-//     orderBook.topNoPrice = 10 - orderBook.topYesPrice;
-
-//     return { success: true };
-//   } else if (side === "no") {
-
-//     if (price < orderBook.topNoPrice) {
-//       return {
-//         success: false,
-//         message: "Invalid request: Price is lower than the top price for No.",
-//       };
-//     }
-
-//     let remainingQty = quantity;
-//     let currentPrice = orderBook.topNoPrice;
-
-//     while (remainingQty > 0 && currentPrice <= price) {
-//       const currentOrder = orderBook.no.find((order) => order.price === currentPrice);
-//       if (currentOrder && currentOrder.quantity > 0) {
-//         const qtyToFill = Math.min(currentOrder.quantity, remainingQty);
-//         currentOrder.quantity -= qtyToFill;
-//         remainingQty -= qtyToFill;
-
-//         if (currentOrder.quantity === 0) {
-//           currentPrice += 0.5;
-//         }
-//       } else {
-//         currentPrice += 0.5;
-//       }
-//     }
-
-//     const nextTopNo = orderBook.no.find((order) => order.quantity > 0);
-//     if (nextTopNo) {
-//       orderBook.topNoPrice = nextTopNo.price;
-//     } else {
-//       orderBook.topNoPrice = 9.5;
-//     }
-
-//     orderBook.topYesPrice = 10 - orderBook.topNoPrice;
-
-//     return { success: true };
-//   }
-// };
-
-//   const topYes = orderBook.yes.find(
-//     (order) => order.price === orderBook.topYesPrice
-//   );
-//   const topNo = orderBook.no.find(
-//     (order) => order.price === orderBook.topNoPrice
-//   );
-
-//   if (side === "yes") {
-//     if (price < orderBook.topYesPrice) {
-//       return {
-//         success: false,
-//         message: "Invalid request: Price is lower than the top price for Yes.",
-//       };
-//     }
-//     if (topYes && topYes.quantity < quantity) {
-//       return {
-//         success: false,
-//         message: "Invalid request: Not enough quantity available.",
-//       };
-//     }
-//     if (!userPortfolio.initialPrice && !userPortfolio.side) {
-//       userPortfolio.side = "yes";
-//       userPortfolio.initialPrice = orderBook.topYesPrice;
-//       userPortfolio.initialQuantity = quantity;
-//     }
-
-//     if (topYes && topNo && topYes.quantity >= quantity) {
-//       topYes.quantity -= quantity;
-
-//       if (topYes.quantity === 0) {
-//         orderBook.topYesPrice += 0.5;
-//         orderBook.topNoPrice -= 0.5;
-//         broadcastPortfolio();
-//         const newTopNo = orderBook.no.find(order => order.price === orderBook.topNoPrice);
-//         if (newTopNo) {
-//           newTopNo.quantity = Math.floor(Math.random() * 100) + 1;
-//         }
-
-//       }
-
-//       broadcastOrderBook(orderBook);
-//       return { success: true };
-//     } else {
-//       return { success: false, message: "Not enough quantity available." };
-//     }
-//   } else {
-//     if (price < orderBook.topNoPrice) {
-//       return {
-//         success: false,
-//         message: "Invalid request: Price is lower than the top price for No.",
-//       };
-//     }
-//     if (topNo && topNo.quantity < quantity) {
-//       return {
-//         success: false,
-//         message: "Invalid request: Not enough quantity available.",
-//       };
-//     }
-//     if (!userPortfolio.initialPrice && !userPortfolio.side) {
-//       userPortfolio.side = "no";
-//       userPortfolio.initialPrice = orderBook.topNoPrice;
-//       userPortfolio.initialQuantity = quantity;
-//     }
-
-//     if (topNo && topYes && topNo.quantity >= quantity) {
-//       topNo.quantity -= quantity;
-
-//       if (topNo.quantity === 0) {
-//         orderBook.topNoPrice += 0.5;
-//         orderBook.topYesPrice -= 0.5;
-//         broadcastPortfolio()
-//         const newTopYes = orderBook.yes.find(order => order.price === orderBook.topYesPrice);
-//         if (newTopYes) {
-//           newTopYes.quantity = Math.floor(Math.random() * 100) + 1;
-//         }
-//         ;
-//       }
-
-//       broadcastOrderBook(orderBook);
-//       return { success: true };
-//     } else {
-//       return { success: false, message: "Not enough quantity available." };
-//     }
-//   }
-// };
-
-// export const calculateProbabilty = (orderBook: OrderBook) => {
-//   const yesProb = (orderBook.topYesPrice / 10) * 100;
-//   const noProb = 100 - yesProb;
-
-//   return {
-//     yesProb,
-//     noProb,
-//   };
-// };
-
-// export const getPortfolio = () => {
-//   if (!userPortfolio.side || userPortfolio.initialPrice === null) {
-//     return { success: false, message: "No orders placed yet." };
-//   }
-
-//   const currentPrice =
-//     userPortfolio.side === "yes" ? orderBook.topYesPrice : orderBook.topNoPrice;
-//   const gainLoss =
-//     (currentPrice - userPortfolio.initialPrice) *
-//     userPortfolio.initialQuantity!;
-
-//   return {
-//     success: true,
-//     side: userPortfolio.side,
-//     initialPrice: userPortfolio.initialPrice,
-//     currentPrice,
-//     quantity: userPortfolio.initialQuantity,
-//     gainLoss: `${gainLoss.toFixed(2)} Rs`,
-//   };
-// };
-// const broadcastOrderBook = (orderBook: OrderBook) => {
-//   const probability = calculateProbabilty(orderBook);
-
-//   WebsocketServer.broadcast({
-//     orderBook,
-//     probability,
-//   });
-// };
-// const broadcastPortfolio = () => {
-//   const portfolio = getPortfolio();
-//   WebsocketServer.broadcast({
-//     portfolio,
-//   });
-// };

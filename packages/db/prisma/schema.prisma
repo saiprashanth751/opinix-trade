@@ -13,7 +13,7 @@ model User {
   balance     Float      @default(0.0)
   role        UserRole
   createdAt   DateTime   @default(now())
-  updatedAt   DateTime
+  updatedAt   DateTime   @default(now())
   Event       Event[]
   OTP         OTP[]
   Payout      Payout[]

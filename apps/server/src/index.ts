@@ -4,7 +4,6 @@ import bodyParser from "body-parser";
 import orderRouter from "./router/order";
 import eventRouter from "./router/event";
 
-
 import http from "http";
 import { setupwebsocket } from "./router/websockets";
 import { updateOrderBook } from "./services/orderBookService";

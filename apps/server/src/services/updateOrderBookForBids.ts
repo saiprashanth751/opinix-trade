@@ -1,4 +1,4 @@
-import prisma from "../utils/db";
+import prisma from "@repo/db/client";
 import { OrderbookForOrders } from "../utils/marketMaker";
 
 export async function updateOrderbookAfterBid(orderbook: OrderbookForOrders) {

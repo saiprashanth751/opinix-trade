@@ -1,5 +1,5 @@
 import { Router } from "express";
-import prisma from "../utils/db";
+import prisma from "@repo/db/client";
 import {
   incomingOrder,
   OrderbookForOrders,

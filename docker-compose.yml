@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    restart: always
+    environment:
+      POSTGRES_USER: dev
+      POSTGRES_PASSWORD: dev
+      POSTGRES_DB: repo
+    volumes:
+      - db:/var/lib/postgresql/data
+    
+  redis:
+    image: redis:7
+    ports:
+      - 6379:6379
+    restart: always
+    volumes:
+      - cache:/data
+
+volumes:
+  db:
+  cache:
+    driver: local

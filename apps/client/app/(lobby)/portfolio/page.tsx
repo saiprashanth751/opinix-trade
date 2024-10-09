@@ -1,11 +1,13 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { getTrades } from "@/actions/Trade/getTrades";
 import Portfolio from "../../../components/landing/Portfolio";
 import { getEventDetails } from "@/actions/Event/getEventDetails";
 import axios from "axios";
+import {toast, Toaster} from "react-hot-toast"
+
 export interface Trade {
   id: string;
   createdAt: Date;
@@ -30,6 +32,7 @@ const Page = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [portfolioData, setPortfolioData] = useState<Portfolio | null>(null);
   const [tradesWithTitles, setTradesWithTitles] = useState<Trade[]>([]);
+
   const { data } = useSession();
   console.log(data?.user);
 
@@ -46,24 +49,37 @@ const Page = () => {
     }
   }, [userId]);
 
-  async function getPortfolioDetails(userId: string) {
+  const { status } = useSession();
+  const userId = "cm1r277l500178uzhh6kiewxa";
+
+
+  const getPortfolioDetails = useCallback(async (userId: string) => {
     setLoading(true);
     try {
       const portfolio = await getTrades(userId);
-      console.log(portfolio);
-
+      console.log("portfolio", portfolio);
+      
       setPortfolioData(portfolio);
-      if (!portfolio) {
-        return;
+      if (portfolio) {
+        const updatedTrades = await fetchTitles(portfolio.trades);
+        setTradesWithTitles(updatedTrades);
       }
-      const updatedTrades = await fetchTitles(portfolio.trades);
-      setTradesWithTitles(updatedTrades);
     } catch (e) {
       console.log("Error fetching portfolio", e);
     } finally {
       setLoading(false);
     }
-  }
+  }, []);
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      redirect("/api/auth/signin");
+    }
+    if (status === "authenticated" && userId) {
+      getPortfolioDetails(userId);
+    }
+  }, [status, userId, getPortfolioDetails]);
+
   async function fetchTitles(trades: Trade[]) {
     const titles = await Promise.all(
       trades.map(async (trade) => {
@@ -84,7 +100,7 @@ const Page = () => {
         );
         if (tradeToSell) {
           const response = await axios.post(
-            "http://localhost:3001/v1/order/sell-order",
+            `${process.env.NEXT_PUBLIC_API_PREFIX_URL}/v1/order/sell-order`,
             {
               tradeId: tradeToSell.id,
               eventId: tradeToSell.eventId,
@@ -93,13 +109,13 @@ const Page = () => {
               side: tradeToSell.side == "YES" ? "yes" : "no",
             }
           );
-          window.alert(response.data.message || "Order sold successfully!");
+          toast.success(response.data.message || "Order sold successfully!");
         } else {
-          window.alert("Trade not found.");
+          toast.error("Trade not found.");
         }
       } catch (error) {
         console.error("Error selling order", error);
-        window.alert("Failed to sell order.");
+        toast.error("Failed to sell order.");
       }
     }
   };
@@ -126,6 +142,7 @@ const Page = () => {
           status :trade.status
         }))}
       />
+      <Toaster position="top-center"/>
     </div>
   );
 };

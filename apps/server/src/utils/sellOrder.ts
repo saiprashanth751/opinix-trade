@@ -1,5 +1,5 @@
 import { WebsocketServer } from "../router/websockets";
-import prisma from "./db";
+import prisma from "@repo/db/client";
 
 interface Order {
   id: string;

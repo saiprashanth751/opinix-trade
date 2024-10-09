@@ -15,7 +15,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import LineChart from "../ui/line-chart";
 import { getEventDetails } from "@/actions/Event/getEventDetails";
 import { ArrowUpDown } from "lucide-react";
+
 import { useSession } from "next-auth/react";
+=======
+import {toast, Toaster} from "react-hot-toast"
+
 
 
 interface OrderBookItem {
@@ -79,12 +83,12 @@ export default function OrderBook({ eventId }: OrderBookProps) {
       }
     }
     fetchInitialData();
+    
   }, [eventId]);
 
   useEffect(() => {
     const ws = new WebSocket("ws://localhost:3001");
     ws.onopen = () => {
-      console.log("Connected to server");
       ws.send(JSON.stringify({ eventId }));
     };
     ws.onmessage = (event: MessageEvent) => {
@@ -109,7 +113,7 @@ export default function OrderBook({ eventId }: OrderBookProps) {
   };
   async function handleTrade() {
     const response = await axios.post(
-      "http://localhost:3001/v1/order/place-order",
+      `${process.env.NEXT_PUBLIC_API_PREFIX_URL}/v1/order/place-order`,
       {
         userId: data?.user.id,
         eventId : eventId,
@@ -118,11 +122,10 @@ export default function OrderBook({ eventId }: OrderBookProps) {
         price: tradePrice,
       }
     );
-    console.log(response);
     if(response.status === 200){
-      window.alert("Order placed successfully!")
+      toast.success("Order placed successfully!")
     }else{
-      window.alert("Error placing order!")
+      toast.error("Error placing order!")
     }
   }
 
@@ -350,6 +353,7 @@ export default function OrderBook({ eventId }: OrderBookProps) {
           <p className="text-gray-300">{description}</p>
         </CardContent>
       </Card>
+      <Toaster position="top-center"/>
     </div>
   );
 }

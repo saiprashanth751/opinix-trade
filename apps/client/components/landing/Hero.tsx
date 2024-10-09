@@ -1,6 +1,5 @@
 "use client"
 import Link from "next/link";
-// @ts-ignore
 import ReactWrapBalancer from "react-wrap-balancer";
 import { useSession } from "next-auth/react";
 import { Button } from "../ui/button";
