@@ -15,7 +15,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import LineChart from "../ui/line-chart";
 import { getEventDetails } from "@/actions/Event/getEventDetails";
 import { ArrowUpDown } from "lucide-react";
+
+import { useSession } from "next-auth/react";
+=======
 import {toast, Toaster} from "react-hot-toast"
+
 
 
 interface OrderBookItem {
@@ -42,6 +46,7 @@ interface OrderBookProps {
 }
 
 export default function OrderBook({ eventId }: OrderBookProps) {
+  const {data} = useSession();
   const [orderBookData, setOrderBookData] = useState<OrderBookData | null>(
     null
   );
@@ -110,7 +115,7 @@ export default function OrderBook({ eventId }: OrderBookProps) {
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_API_PREFIX_URL}/v1/order/place-order`,
       {
-        userId: "cm1r277l500178uzhh6kiewxa",
+        userId: data?.user.id,
         eventId : eventId,
         side: side,
         quantity: tradeQuantity,

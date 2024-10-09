@@ -32,8 +32,26 @@ const Page = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [portfolioData, setPortfolioData] = useState<Portfolio | null>(null);
   const [tradesWithTitles, setTradesWithTitles] = useState<Trade[]>([]);
+
+  const { data } = useSession();
+  console.log(data?.user);
+
+  useEffect(() => {
+    if (!data?.user) {
+      redirect("/api/auth/signin");
+    }
+  }, [data?.user]);
+  const userId = data?.user.id;
+
+  useEffect(() => {
+    if (userId) {
+      getPortfolioDetails(userId);
+    }
+  }, [userId]);
+
   const { status } = useSession();
   const userId = "cm1r277l500178uzhh6kiewxa";
+
 
   const getPortfolioDetails = useCallback(async (userId: string) => {
     setLoading(true);
