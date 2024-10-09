@@ -14,6 +14,7 @@ This project is a real-time opinion trading platform where users can place bets 
   - [Components:](#components)
   - [Current Features](#current-features)
   - [Future Steps](#future-steps)
+  - [](#)
 
 ---
 
@@ -66,16 +67,15 @@ The system is designed to handle real-time updates and asynchronous order proces
 ## Future Steps
 
    
-1. **Order Queuing:**
-   - A Redis-backed queue system will be introduced for handling order submissions and matching efficiently.
    
-2. **Payment Integration:**
-   - Add Stripe or Razorpay to enable secure and seamless payments within the platform.
+1. **Payment Integration:**
+   - Add Stripe, Juspay or Razorpay to enable secure and seamless payments within the platform.
    
-3. **Authentication:**
-   - Implement user authentication using NextAuth.js to allow users to create accounts and manage their portfolios securely.
    
-4. **Worker-based Architecture:**
+2. **Worker-based Architecture:**
    - A worker system handles adding and matching orders in the order book, ensuring smooth operation and avoiding race conditions.
 
+**Working on this architecture**
+
+![User Diagram](https://utfs.io/f/40G0kRMDo8Ybl88nziDdG6QCSrVvFodOTgceNxm81943jJbA)
 ---
