@@ -17,7 +17,7 @@ import { getEventDetails } from "@/actions/Event/getEventDetails";
 import { ArrowUpDown } from "lucide-react";
 
 import { useSession } from "next-auth/react";
-=======
+
 import {toast, Toaster} from "react-hot-toast"
 
 

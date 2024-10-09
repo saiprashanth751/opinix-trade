@@ -6,7 +6,7 @@ import { getTrades } from "@/actions/Trade/getTrades";
 import Portfolio from "../../../components/landing/Portfolio";
 import { getEventDetails } from "@/actions/Event/getEventDetails";
 import axios from "axios";
-import {toast, Toaster} from "react-hot-toast"
+import { toast, Toaster } from "react-hot-toast";
 
 export interface Trade {
   id: string;
@@ -18,7 +18,7 @@ export interface Trade {
   side: "YES" | "NO";
   title?: string;
   gainloss: number | null;
-  status : "ACTIVE"|"PAST"
+  status: "ACTIVE" | "PAST";
 }
 export interface Portfolio {
   id: string;
@@ -50,15 +50,13 @@ const Page = () => {
   }, [userId]);
 
   const { status } = useSession();
-  const userId = "cm1r277l500178uzhh6kiewxa";
-
 
   const getPortfolioDetails = useCallback(async (userId: string) => {
     setLoading(true);
     try {
       const portfolio = await getTrades(userId);
       console.log("portfolio", portfolio);
-      
+
       setPortfolioData(portfolio);
       if (portfolio) {
         const updatedTrades = await fetchTitles(portfolio.trades);
@@ -138,11 +136,11 @@ const Page = () => {
           price: trade.price,
           quantity: trade.quantity,
           type: trade.side,
-          gainloss : trade.gainloss,
-          status :trade.status
+          gainloss: trade.gainloss,
+          status: trade.status,
         }))}
       />
-      <Toaster position="top-center"/>
+      <Toaster position="top-center" />
     </div>
   );
 };
