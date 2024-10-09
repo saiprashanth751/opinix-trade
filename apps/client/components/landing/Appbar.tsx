@@ -1,10 +1,11 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavigationMenu } from "./Navmenu";
 import ProfileHeader from "./ProfileHeader";
 import { Wallet } from "lucide-react";
 import { useSession } from "next-auth/react";
+import { getBalance } from "@/actions/Payout/Recharge";
 
 interface navMenutItemType {
   title: string;
@@ -12,8 +13,15 @@ interface navMenutItemType {
 }
 
 export default function Appbar() {
+  const[balance,setBalance] = useState(0);
   const { data } = useSession();
-
+  useEffect(() => {
+    if (data?.user.id) {
+     const bal = getBalance(data?.user.id);
+     // @ts-expect-error promise <nmber></nmber>
+     setBalance(bal);
+    }
+  }, [data?.user.id]);
   const navMenutItem: Array<navMenutItemType> = [
     { title: "Events", link: "/event" },
     { title: "Portfolio", link: "/portfolio" },
@@ -43,7 +51,7 @@ export default function Appbar() {
           <div className="flex gap-3 items-center">
             <button className="bg-gray-800 text-white border-gray-700 hover:bg-gray-700 hover:text-white border rounded pr-4 pf-4 pt-2 pb-2 flex items-center space-x-2">
               <Wallet className="h-5 w-5 ml-3" />
-              <span className="font-mono">₹{data?.user.balance}</span>
+              <span className="font-mono">₹ {balance}</span>
             </button>
             <ProfileHeader />
           </div>
