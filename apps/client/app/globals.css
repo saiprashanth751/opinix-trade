@@ -1,4 +1,4 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -41,9 +41,9 @@ body {
     --radius: 0.5rem;
   }
   .dark {
-    --background: 231 54% 5%; /* Updated to #05071A */
+    --background: 231 54% 5%; 
     --foreground: 0 0% 98%;
-    --card: 231 54% 5%; /* Updated to #05071A */
+    --card: 231 54% 5%;
     --card-foreground: 0 0% 98%;
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
@@ -116,4 +116,16 @@ body {
   );
   border-image-slice: 1;
   border-image-width: 1 1 1 0;
+} */
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  @apply bg-gray-100;
 }
