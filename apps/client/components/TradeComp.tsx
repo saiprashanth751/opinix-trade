@@ -1,6 +1,6 @@
-import { EventCard } from "@/components/EventCard";
+import { EventCard } from "./EventCard";
 
-const Page = () => {
+export const TradeComp = () => {
   const events = [
     {
       icon: "/assets/event1.png",
@@ -65,8 +65,18 @@ const Page = () => {
   ];
 
   return (
-    <>
-    <div className="w-full lg:w-full p-8 flex justify-center items-center">
+    <div className="w-full lg:w-full p-8">
+      <div className="flex flex-col lg:flex-row h-auto lg:h-[80vh] p-10">
+        {/* Text Section */}
+        <div className="flex flex-col mb-8 lg:w-1/2 justify-center">
+          <p className="text-4xl sm:text-6xl lg:text-8xl font-medium pr-0 lg:pr-10">
+            Trade when you like,
+          </p>
+          <p className="text-3xl sm:text-4xl lg:text-5xl font-medium mt-3">
+            on what you like.
+          </p>
+        </div>
+
         {/* Events Grid Section */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 lg:w-1/2 w-full mt-8 lg:mt-0 overflow-y-auto">
           {events.map((event, index) => (
@@ -74,10 +84,6 @@ const Page = () => {
           ))}
         </div>
       </div>
-    
-    </>
+    </div>
   );
 };
-
-
-export default Page;
