@@ -1,6 +1,6 @@
-import { WebsocketServer } from "../router/websockets";
+import { WebsocketServer } from "./websockets";
 import prisma from "@repo/db/client";
-
+import { sides } from "@opinix/types";
 interface Order {
   id: string;
   quantity: number;
@@ -13,10 +13,11 @@ interface OrderBook {
   yes: Order[];
   no: Order[];
 }
+
 export async function sellOrder(
   tradeId: string,
   eventId: string,
-  side: "yes" | "no",
+  side: sides,
   quantity: number,
   price: number,
   orderbook: OrderBook,
