@@ -1,10 +1,10 @@
 import { redisClient } from "@repo/order-queue";
-import { WebsocketServer } from "../router/websockets";
+import { WebsocketServer } from "./websockets";
 import { updateOrderbookAfterBid } from "../services/updateOrderBookForBids";
 import prisma from "@repo/db/client";
+import { TOrderbookForOrders } from "@opinix/types";
 
-
-redisClient.connect().then(()=>{
+redisClient.connect().then(() => {
   console.log("Connected to redisclient");
 });
 
@@ -19,7 +19,7 @@ type OrderBook = {
   topNoPrice: number;
 };
 
-export const initializeOrderBook = (): OrderBook => {
+export const fillOrderBook = (): OrderBook => {
   const orderBook: OrderBook = {
     yes: [],
     no: [],
@@ -41,7 +41,6 @@ export const initializeOrderBook = (): OrderBook => {
       orderBook.yes.push({
         price,
         quantity: Math.floor(Math.random() * 100) + 1,
-        
       });
       orderBook.no.push({
         price,
@@ -54,7 +53,7 @@ export const initializeOrderBook = (): OrderBook => {
 
   return orderBook;
 };
-export let orderBook = initializeOrderBook();
+export let orderBook = fillOrderBook();
 
 export enum OrderStatus {
   PENDING = "PENDING",
@@ -91,7 +90,7 @@ export async function incomingOrder(
   side: "yes" | "no",
   price: number,
   quantity: number,
-  orderbook: OrderbookForOrders
+  orderbook: TOrderbookForOrders
 ) {
   await queuePlacedOrder(userId, side, price, quantity);
   await executePlacedOrder(orderbook);
@@ -107,7 +106,7 @@ export async function queuePlacedOrder(
   console.log(`Placed order queued: ${order}`);
 }
 
-export async function executePlacedOrder(orderbook: OrderbookForOrders) {
+export async function executePlacedOrder(orderbook: TOrderbookForOrders) {
   let order = await redisClient.rPop("placedOrderQueue");
   while (order) {
     const parsedOrder = JSON.parse(order);
@@ -138,7 +137,7 @@ export async function processOrder(
   side: "yes" | "no",
   price: number,
   quantity: number,
-  orderbook: OrderbookForOrders
+  orderbook: TOrderbookForOrders
 ) {
   const opposingSide = side === "yes" ? "no" : "yes";
   let topPrice = side === "yes" ? orderbook.topYesPrice : orderbook.topNoPrice;
@@ -178,7 +177,8 @@ export async function processOrder(
         },
       });
     }
-   const buyPrice = side === 'yes' ? orderbook.topYesPrice : orderbook.topNoPrice
+    const buyPrice =
+      side === "yes" ? orderbook.topYesPrice : orderbook.topNoPrice;
     const tradeSide = side === "yes" ? "YES" : "NO";
     await prisma.trade.create({
       data: {
@@ -231,7 +231,8 @@ export async function processOrder(
             (order) => order.price === price
           );
           if (matchingOrder && matchingOrder.quantity === 0) {
-            matchingOrder.quantity = Math.floor(Math.random() * (50 - 30 + 1)) + 30;
+            matchingOrder.quantity =
+              Math.floor(Math.random() * (50 - 30 + 1)) + 30;
           }
         }
       }
@@ -255,11 +256,9 @@ export async function processOrder(
         topPriceYes: orderbook.topYesPrice,
         topPriceNo: orderbook.topNoPrice,
       },
-      
-  });
+    });
     await updateOrderbookAfterBid(orderbook);
 
-   
     await checkAndExecuteQueueOrders(orderbook);
     WebsocketServer.broadcast(orderbook.eventId, {
       orderBook: {
@@ -274,12 +273,11 @@ export async function processOrder(
         topPriceYes: orderbook.topYesPrice,
         topPriceNo: orderbook.topNoPrice,
       },
-      
-  });
+    });
     const allTrades = await prisma.trade.findMany({
       where: {
         eventId: orderbook.eventId,
-        status : 'ACTIVE'
+        status: "ACTIVE",
       },
     });
     for (const trade of allTrades) {
@@ -310,7 +308,7 @@ async function queueOrder(
   await redisClient.lPush("orderQueue", order);
   console.log(`Order queued: ${order}`);
 }
-async function checkAndExecuteQueueOrders(orderbook: OrderbookForOrders) {
+async function checkAndExecuteQueueOrders(orderbook: TOrderbookForOrders) {
   let order = await redisClient.rPop("orderQueue");
   while (order) {
     console.log(`Popped order from queue: ${order}`);

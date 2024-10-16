@@ -1,7 +1,8 @@
 import prisma from "@repo/db/client";
 import { OrderbookForOrders } from "../utils/marketMaker";
+import { TOrderbookForOrders } from "@opinix/types";
 
-export async function updateOrderbookAfterBid(orderbook: OrderbookForOrders) {
+export async function updateOrderbookAfterBid(orderbook: TOrderbookForOrders) {
   try {
     await prisma.orderBook.update({
       where: {
