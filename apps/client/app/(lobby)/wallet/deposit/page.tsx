@@ -1,14 +1,16 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { cashfree } from "@/lib/cashfree";
+import {toast} from "react-hot-toast"
 
 const Page = () => {
   const [amount, setAmount] = useState<string>("");
   const [gst, setGst] = useState<number>(0);
   const [showSummary, setShowSummary] = useState<boolean>(false);
-  const [sessionId, setSession] =  useState<string>("");
-
+  const paymentUrl = process.env.NEXT_PUBLIC_BASE_URL as string + 
+                     process.env.NEXT_PUBLIC_PAYMENT_INITIATE_URL_ENDPOINT as string;
+    
   useEffect(() => {
     const numAmount = parseFloat(amount);
     if (!isNaN(numAmount) && numAmount > 0) {
@@ -19,19 +21,26 @@ const Page = () => {
     setShowSummary(!isNaN(numAmount) && numAmount >= 5);
   }, [amount]);
 
-  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAmount(e.target.value);
-  };
-
-  const handleQuickAmount = (value: number) => {
-    setAmount(value.toString());
-  };
-
-  async function handleRechange(){
-    const result =  await axios.post(process.env.NEXT_PUBLIC_BASE_URL + '/api/initiate', {
-
+  async function handleRechargeClick() {
+    const res = await axios.post(paymentUrl, {
+      order_id: "order_id_random" + Date.now(),
+      customer_id: "customer_id_random" + Date.now(),
+      customer_phone: "9876543210",
+      order_amount: amount,
     });
-    console.log(result);
+
+    const checkoutOptions = {
+      paymentSessionId: res.data.payment_session_id,
+      returnUrl: process.env.BASE_URL,
+    };
+    cashfree.checkout(checkoutOptions).then(function (result: {
+      error: string;
+      redirect: string;
+    }) {
+      if (result.error) {
+        toast.error("Error in depositing money! please try again")
+      }
+    });
   }
 
   return (
@@ -46,7 +55,7 @@ const Page = () => {
               <input
                 type="number"
                 value={amount}
-                onChange={handleAmountChange}
+                onChange={(e) => setAmount(e.target.value)}
                 className="border border-blue-400 w-full rounded-md h-10 px-3"
               />
             </div>
@@ -57,19 +66,19 @@ const Page = () => {
             )}
             <div className="flex gap-3 mt-5">
               <button
-                onClick={() => handleQuickAmount(250)}
+                onClick={() => setAmount("250")}
                 className="border rounded font-bold text-xs px-3 py-1"
               >
                 +250
               </button>
               <button
-                onClick={() => handleQuickAmount(500)}
+                onClick={() =>setAmount("500")}
                 className="border rounded font-bold text-xs px-3 py-1"
               >
                 +500
               </button>
               <button
-                onClick={() => handleQuickAmount(1000)}
+                onClick={() => setAmount("1000")}
                 className="border rounded font-bold text-xs px-3 py-1"
               >
                 +1000
@@ -79,7 +88,7 @@ const Page = () => {
               <button
                 className={`${showSummary ? "bg-black" : "bg-gray-400"} text-white w-full rounded-md py-2 font-bold`}
                 disabled={!showSummary}
-                onClick={handleRechange}
+                onClick={handleRechargeClick}
               >
                 Recharge
               </button>
