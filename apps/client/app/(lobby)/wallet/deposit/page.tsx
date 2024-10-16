@@ -1,11 +1,13 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const Page = () => {
   const [amount, setAmount] = useState<string>("");
   const [gst, setGst] = useState<number>(0);
   const [showSummary, setShowSummary] = useState<boolean>(false);
+  const [sessionId, setSession] =  useState<string>("");
 
   useEffect(() => {
     const numAmount = parseFloat(amount);
@@ -24,6 +26,13 @@ const Page = () => {
   const handleQuickAmount = (value: number) => {
     setAmount(value.toString());
   };
+
+  async function handleRechange(){
+    const result =  await axios.post(process.env.NEXT_PUBLIC_BASE_URL + '/api/initiate', {
+
+    });
+    console.log(result);
+  }
 
   return (
     <>
@@ -70,6 +79,7 @@ const Page = () => {
               <button
                 className={`${showSummary ? "bg-black" : "bg-gray-400"} text-white w-full rounded-md py-2 font-bold`}
                 disabled={!showSummary}
+                onClick={handleRechange}
               >
                 Recharge
               </button>

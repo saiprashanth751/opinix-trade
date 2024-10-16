@@ -26,7 +26,7 @@ const ToggleSections = () => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row items-center justify-between p-4 py-20 bg-black text-white">
+    <div className="flex flex-col lg:flex-row items-center justify-between p-28 py-20 bg-black text-white">
       <div className="w-full lg:w-1/2 mb-8 lg:mb-0">
         {/* Toggle buttons */}
         <div className="flex space-x-4 mb-6">
