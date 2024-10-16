@@ -1,0 +1,8 @@
+{
+  "name": "@opinix/zod-schema",
+  "version": "1.0.0",
+  "main": "index.js",
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}
