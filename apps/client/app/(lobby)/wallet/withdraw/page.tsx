@@ -1,19 +1,9 @@
 "use client";
-
-import { useState, ChangeEvent } from "react";
+import { useState } from "react";
 
 const Page = () => {
   const [amount, setAmount] = useState<number>(0);
   const [account, setAccount] = useState<string>("");
-
-  const handleAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setAmount(Number(e.target.value));
-  };
-
-  const handleAccountChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setAccount(e.target.value);
-  };
-
   return (
     <>
       <div className="w-full sm:w-3/4 md:w-2/3 lg:w-1/2 mx-auto mt-10 px-4 sm:px-0">
@@ -31,7 +21,7 @@ const Page = () => {
                 type="number"
                 id="amount"
                 value={amount}
-                onChange={handleAmountChange}
+                onChange={(e) => setAmount(Number(e.target.value))}
                 className="border border-blue-400 w-full rounded-md h-10 px-3"
               />
               <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
@@ -54,7 +44,7 @@ const Page = () => {
               type="text"
               id="account"
               value={account}
-              onChange={handleAccountChange}
+              onChange={(e) => setAccount(e.target.value)}
               className="border w-full rounded-md h-10 px-3"
             />
           </div>

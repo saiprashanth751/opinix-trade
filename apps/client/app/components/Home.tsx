@@ -1,7 +1,7 @@
 import React from 'react'
-import {Hero} from '../../components/landing/Hero'
-import TakesCareWrapper from "../../components/landing/TakesCare"
-import FAQS from "../../components/landing/FAQs"
+import {Hero} from '../../components/landing/Home/Hero'
+import TakesCareWrapper from "../../components/landing/Home/TakesCare"
+import FAQS from "../../components/landing/Home/FAQs"
 
 export const HomeComponent = () => {
   return (

@@ -4,7 +4,7 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
-    const response = await fetch("https://sandbox.cashfree.com/pg/orders", {
+    const response = await fetch(process.env.CASHFREE_URL!, {
       method: "POST",
       headers: {
         accept: "application/json",
@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
         order_amount: body.order_amount,
         order_currency: "INR",
         order_meta: {
-          notify_url: "https://webhook.site/41583a44-713e-4ba7-a4f1-4a954d84cf08", // TODO: add a webhook
+          notify_url: process.env.CASHFREE_WEBHOOK_URL, // TODO: add a webhook
           payment_methods: "cc,dc,upi",
         },
       }),
