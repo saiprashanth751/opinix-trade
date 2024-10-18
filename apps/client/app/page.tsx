@@ -1,9 +1,8 @@
-import { Navbar } from "@/components/landing/Appbar/Navbar";
-import { HeroComp } from "@/components/HeroComp";
-import ToggleSections from "@/components/ToogleSections";
-import { TradeComp } from "@/components/TradeComp";
-import { DownloadBanner } from "@/components/DownloadBanner";
-import TradingNewsComponent from "@/components/TradingNewsComponent";
+import { HeroComp } from "@/components/landing/Home/HeroComp";
+import ToggleSections from "@/components/landing/Home/ToogleSections";
+import { TradeComp } from "@/components/landing/Home/TradeComp";
+import { DownloadBanner } from "@/components/landing/Home/DownloadBanner";
+import TradingNewsComponent from "@/components/landing/Home/TradingNewsComponent";
 import FeatureComponent from "@/components/landing/Home/Features";
 import ProboCare from "@/components/landing/Home/ProboCare";
 

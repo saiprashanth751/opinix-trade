@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { SessionProviders } from "./_provider";
+import { SessionProviders } from "@/providers/session-provider";
 import Navbar from "@/components/landing/Appbar/Navbar";
 import { Toaster } from "react-hot-toast";
 
@@ -31,8 +31,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <SessionProviders>
         <Navbar />
-        <SessionProviders>{children}</SessionProviders>
+          {children}
+        </SessionProviders>
         <Toaster position="top-center" reverseOrder={false} />
       </body>
     </html>

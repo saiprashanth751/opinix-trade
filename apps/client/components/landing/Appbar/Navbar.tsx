@@ -2,8 +2,14 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
-import { WhiteBtn } from "@/components/WhiteBtn";
-import { BlackBtn } from "@/components/BlackBtn";
+import { WhiteBtn } from "@/components/ui/WhiteBtn";
+import { BlackBtn } from "@/components/ui/BlackBtn";
+
+type TNavButtonProps = {
+  children: React.ReactNode;
+  path: string;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+};
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,7 +22,7 @@ export const Navbar = () => {
     { name: "Recharge", path: "/wallet/deposit" },
   ];
 
-  const NavButton = ({ children, path }:any) => (
+  const NavButton = ({ children, path }: TNavButtonProps) => (
     <Link href={path}>
       <button className="font-medium p-2 rounded transition duration-300">
         {children}
@@ -30,9 +36,9 @@ export const Navbar = () => {
         {/* Logo */}
         <div className="flex items-center">
           <Link href={"/"}>
-          <button onClick={() => {}}>
-            <div className="text-2xl font-semibold mr-5">OpiniX</div>
-          </button>
+            <button onClick={() => {}}>
+              <div className="text-2xl font-semibold mr-5">OpiniX</div>
+            </button>
           </Link>
         </div>
 
@@ -69,11 +75,7 @@ export const Navbar = () => {
           </p>
           <div className="flex flex-col space-y-2">
             {navItems.map((item) => (
-              <NavButton
-                key={item.name}
-                path={item.path}
-                onClick={toggleMenu}
-              >
+              <NavButton key={item.name} path={item.path} onClick={toggleMenu}>
                 {item.name}
               </NavButton>
             ))}

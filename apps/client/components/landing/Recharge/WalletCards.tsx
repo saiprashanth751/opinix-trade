@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 interface WalletCardsProps {
   icon: string;
   name: string;
@@ -17,7 +19,7 @@ const WalletCards = ({
 }: WalletCardsProps) => {
   return (
     <div className="bg-white rounded-md flex flex-col justify-center items-center p-5 gap-2 w-full sm:w-1/2">
-      <img src={icon} alt="" className="h-8 w-8" />
+      <Image src={icon} alt="" className="h-8 w-8" />
       <div className="">{name}</div>
       <div className="font-bold text-lg">₹ {amount}</div>
       <button

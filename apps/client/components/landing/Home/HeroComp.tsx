@@ -1,5 +1,5 @@
-import { BlackBtn } from "@/components/BlackBtn";
-import { WhiteBtn } from "@/components/WhiteBtn";
+import { BlackBtn } from "@/components/ui/BlackBtn";
+import { WhiteBtn } from "@/components/ui/WhiteBtn";
 import Image from "next/image";
 import { FaSquareCheck } from "react-icons/fa6";
 

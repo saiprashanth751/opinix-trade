@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { PortfolioSummary } from "@/components/PortfolioSummary";
+import { PortfolioSummary } from "@/components/landing/Portfolio/PortfolioSummary";
 
 const Page = () => {
   const [activeTab, setActiveTab] = useState<string>("active");

@@ -1,23 +1,8 @@
 import express from "express";
-import cors from "cors";
-import bodyParser from "body-parser";
-import { router } from "./router";
-
-import http from "http";
-import { setupwebsocket } from "./utils/websockets";
-import { updateOrderBook } from "./services/orderBookService";
-
+import {ORDERBOOK} from "@repo/engine"
 const app = express();
+console.log(ORDERBOOK);
 
-app.use(cors());
-app.use(bodyParser.json());
-app.use("/v1", router);
-
-const server = http.createServer(app);
-export const WebsocketServer = setupwebsocket(server);
-server.listen(3001, () => {
-  console.log(`Server is running on http://localhost:3001`);
-});
-setInterval(async () => {
-  await updateOrderBook();
-}, 30000);
+app.listen(3001, () =>{
+  console.log(`server is runnning on http://localhost:3001`)
+})

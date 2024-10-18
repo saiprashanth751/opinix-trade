@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input"
 import login from "@/public/login.png"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useState } from "react"
-import { InputOTPForm } from "../ui/OtpVerificationForm"
+import { InputOTPForm } from "@/components/ui/OtpVerificationForm"
 import { sendSMSOTP } from "@/actions/OTP/sendOtp"
 import { LoaderCircle } from "lucide-react"
 import {toast, Toaster} from "react-hot-toast";
@@ -59,7 +59,7 @@ export function Login() {
                                     onChange={(e) => setPhone(e.target.value)}
                                 />
                             </div>
-                            <Button className="w-full mb-4" onClick={handleSubmit} disabled={isLoading ? true : false}>{!isLoading ? "Get OTP" : <LoaderCircle className="animate-spin"/> }</Button></>}
+                            <Button className="w-full mb-4 bg-black text-white" onClick={handleSubmit} disabled={isLoading ? true : false}>{!isLoading ? "Get OTP" : <LoaderCircle className="animate-spin"/> }</Button></>}
                         <p className="text-xs text-gray-500 mt-5">
                             By continuing, you accept that you are 18+ years of age & agree to the{' '}
                             <a href="#" className="text-blue-500 hover:underline">
