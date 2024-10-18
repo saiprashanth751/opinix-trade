@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { SessionProviders } from "./_provider";
-import Navbar from "@/components/Navbar";
+import { SessionProviders } from "@/providers/session-provider";
+import Navbar from "@/components/landing/Appbar/Navbar";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -25,14 +26,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar/>
-        <SessionProviders>{children}</SessionProviders>
+        <SessionProviders>
+        <Navbar />
+          {children}
+        </SessionProviders>
+        <Toaster position="top-center" reverseOrder={false} />
       </body>
     </html>
   );

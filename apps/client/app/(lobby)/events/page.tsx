@@ -1,4 +1,4 @@
-import { EventCard } from "@/components/EventCard";
+import { EventCard } from "@/components/landing/Home/EventCard";
 
 const Page = () => {
   const events = [

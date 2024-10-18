@@ -1,28 +1,33 @@
 "use client";
-
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
-import { WhiteBtn } from "@/components/WhiteBtn";
-import { BlackBtn } from "@/components/BlackBtn";
+import Link from "next/link";
+import { WhiteBtn } from "@/components/ui/WhiteBtn";
+import { BlackBtn } from "@/components/ui/BlackBtn";
+
+type TNavButtonProps = {
+  children: React.ReactNode;
+  path: string;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+};
 
 export const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false); 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const navItems = [
     { name: "Events", path: "/events" },
     { name: "Portfolio", path: "/portfolio" },
-    { name: "Recharge", path: "/recharge" },
+    { name: "Recharge", path: "/wallet/deposit" },
   ];
 
-  const NavButton = ({ children, onClick }: any) => (
-    <button
-      onClick={onClick}
-      className=" font-medium p-2 rounded transition duration-300"
-    >
-      {children}
-    </button>
+  const NavButton = ({ children, path }: TNavButtonProps) => (
+    <Link href={path}>
+      <button className="font-medium p-2 rounded transition duration-300">
+        {children}
+      </button>
+    </Link>
   );
 
   return (
@@ -30,15 +35,17 @@ export const Navbar = () => {
       <div className="container mx-auto flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center">
-          <button onClick={() => {}}>
-            <div className="text-2xl font-semibold mr-5">OpiniX</div>
-          </button>
+          <Link href={"/"}>
+            <button onClick={() => {}}>
+              <div className="text-2xl font-semibold mr-5">OpiniX</div>
+            </button>
+          </Link>
         </div>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-4">
           {navItems.map((item) => (
-            <NavButton key={item.name} onClick={() => {}}>
+            <NavButton key={item.name} path={item.path}>
               {item.name}
             </NavButton>
           ))}
@@ -68,12 +75,7 @@ export const Navbar = () => {
           </p>
           <div className="flex flex-col space-y-2">
             {navItems.map((item) => (
-              <NavButton
-                key={item.name}
-                onClick={() => {
-                  toggleMenu();
-                }}
-              >
+              <NavButton key={item.name} path={item.path} onClick={toggleMenu}>
                 {item.name}
               </NavButton>
             ))}

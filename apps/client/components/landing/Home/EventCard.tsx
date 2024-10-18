@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 interface EventCardProps {
   icon: string;
   traders: number;
@@ -15,9 +17,9 @@ export const EventCard = ({
 }: EventCardProps) => (
   <div className="rounded-lg shadow-lg p-4 flex flex-col justify-between bg-white">
     <div className="flex flex-col mb-2">
-      <img src={icon} alt="Event icon" className="w-10 h-10 mr-4" />
+      <Image src={icon} alt="Event icon" className="w-10 h-10 mr-4" width={200} height={200}/>
       <div className="flex mt-2">
-        <img src="/assets/trade-icon.png" alt="" className="w-5 h-5" />
+        <Image src="/assets/trade-icon.png" alt="" className="w-5 h-5" width={200} height={200}/>
         <div className="text-gray-500 text-xs mt-0.5">{traders} traders</div>
       </div>
     </div>
