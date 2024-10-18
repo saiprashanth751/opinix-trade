@@ -1,6 +1,6 @@
 "use client";
 
-import WalletCards from "@/components/WalletCards";
+import WalletCards from "@/components/landing/Recharge/WalletCards";
 
 const Page = () => {
   return (

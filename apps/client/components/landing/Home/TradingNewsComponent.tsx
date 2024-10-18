@@ -60,9 +60,9 @@ const TradingNewsComponent = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-5xl md:text-6xl font-bold text-center mb-8">
-        <span className="text-purple-500">"</span>
+        <span className="text-purple-500">{'"'}</span>
         News that creates trading opportunity, everyday
-        <span className="text-purple-500">"</span>
+        <span className="text-purple-500">{'"'}</span>
       </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {tradeInfo.map((trade) => (

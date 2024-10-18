@@ -21,7 +21,7 @@ interface PortfoliSummaryProps {
         </div>
         <div>
           <p className="font-semibold">₹{todayReturns}</p>
-          <p className="text-gray-600">Today's returns</p>
+          <p className="text-gray-600">Todays returns</p>
         </div>
         <div>
           <p className="font-semibold">{rank}</p>
