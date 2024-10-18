@@ -8,13 +8,12 @@ export enum sides {
   NO = "no",
 }
 
-import { OrderStatus } from "@prisma/client";
 export type TOrder = {
   id: string;
   orderBookId: string;
   price: number;
   quantity: number;
-  status: OrderStatus;
+  status: "PENDING" | "PLACED";
   createdAt: Date;
 };
 
