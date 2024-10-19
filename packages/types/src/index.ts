@@ -4,6 +4,10 @@ export enum EOrderStatus {
   PLACED = "PLACED",
 }
 
+export enum EOrderType {
+  BUY = "buy",
+  SELL = "sell",
+}
 export enum sides {
   YES = "yes",
   NO = "no",

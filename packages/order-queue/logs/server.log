@@ -8,3 +8,12 @@
 [ 2024-10-19 20:02:18 ] -  [32minfo[39m -  WORKER | Starting order worker
 [ 2024-10-19 20:02:18 ] -  [32minfo[39m -  SERVER | REDIS: Connected to Redis
 [ 2024-10-19 20:02:18 ] -  [32minfo[39m -  SERVER | REDIS: Redis connection is ready to start execution
+[ 2024-10-19 20:06:55 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-19 20:06:55 ] -  [32minfo[39m -  SERVER | REDIS: Connected to Redis
+[ 2024-10-19 20:06:55 ] -  [32minfo[39m -  SERVER | REDIS: Redis connection is ready to start execution
+[ 2024-10-19 20:09:47 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-19 20:09:47 ] -  [32minfo[39m -  SERVER | REDIS: Connected to Redis
+[ 2024-10-19 20:09:47 ] -  [32minfo[39m -  SERVER | REDIS: Redis connection is ready to start execution
+[ 2024-10-19 20:13:01 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-19 20:13:01 ] -  [32minfo[39m -  SERVER | REDIS: Connected to Redis
+[ 2024-10-19 20:13:01 ] -  [32minfo[39m -  SERVER | REDIS: Redis connection is ready to start execution
