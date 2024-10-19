@@ -1,11 +1,10 @@
-import { createClient } from "redis";
-import dotenv from "dotenv";
-dotenv.config();
+import { addToOrderQueue } from "./queues/orderQueue";
+import orderWorker from "./queues/orderProcessor";
+import { logger } from "@opinix/logger";
+const startWorker = async () => {
+  logger.info("WORKER | Starting order worker");
+  orderWorker;
+};
 
-export const redisClient = createClient({
-//   password: process.env.REDIS_PASSWORD,
-  socket: {
-    host: process.env.REDIS_HOST,
-    port: process.env.REDIS_PORT as unknown as number,
-  },
-});
+startWorker();
+export { addToOrderQueue };

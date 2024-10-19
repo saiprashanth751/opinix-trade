@@ -23,6 +23,7 @@
     "@radix-ui/react-toast": "^1.2.1",
     "@repo/db": "*",
     "@repo/order-queue": "*",
+    "@opinix/types": "*",
     "chart.js": "^4.4.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
