@@ -24,7 +24,6 @@ export const createEventHandler = AsyncWrapper(
       sot,
       quantity,
     } = req.body;
-    console.log(req.body);
     let slug = slugify(title);
 
     let eventCode = eventCodeGenerator();
@@ -85,7 +84,7 @@ export const getTradeSummaryHandler = AsyncWrapper(
 
     const event = await prisma.event.findUnique({
       where: {
-        eventId: eventId as unknown as number,
+        eventId: parseInt(eventId as unknown as string),
       },
     });
     if (!event) {
