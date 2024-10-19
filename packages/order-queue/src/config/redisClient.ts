@@ -1,5 +1,6 @@
 import IORedis, { Redis } from "ioredis";
 import "dotenv/config";
+import { logger } from "@opinix/logger";
 const redisUri = process.env.REDIS_URI || "redis://localhost:6379";
 let redisParams = {
   maxRetriesPerRequest: null,
@@ -11,23 +12,25 @@ const getRedisClient = () => {
       ...redisParams,
     });
     redisClient.on("connect", () => {
-      console.info("SERVER | REDIS: Connected to Redis");
+      logger.info("SERVER | REDIS: Connected to Redis");
     });
 
     redisClient.on("ready", () => {
-      console.info("SERVER | REDIS: Redis connection is ready");
+      logger.info(
+        "SERVER | REDIS: Redis connection is ready to start execution"
+      );
     });
 
     redisClient.on("error", (err) => {
-      console.error("SERVER: ERROR Connecting to Redis", err);
+      logger.error("SERVER: ERROR Connecting to Redis", err);
     });
 
     redisClient.on("close", () => {
-      console.warn("SERVER | REDIS: Connection closed");
+      logger.warn("SERVER | REDIS: Connection closed");
     });
 
     redisClient.on("reconnecting", () => {
-      console.info("SERVER | REDIS: Reconnecting...");
+      logger.info("SERVER | REDIS: Reconnecting...");
     });
   }
   return redisClient;

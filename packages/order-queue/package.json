@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "dependencies": {
+    "@opinix/logger": "*",
     "dotenv": "^16.4.5",
     "nodemon": "^3.1.7",
     "redis": "^4.7.0"
