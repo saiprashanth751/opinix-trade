@@ -15,6 +15,7 @@
   "dependencies": {
     "nodemon": "^3.1.7",
     "@opinix/logger":"*",
+    "@repo/order-queue":"*",
     "redis": "^4.7.0",
     "ws": "^8.18.0"
   }

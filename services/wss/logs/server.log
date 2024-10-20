@@ -2,3 +2,173 @@
 [ 2024-10-19 23:56:01 ] -  [32minfo[39m -  WebSocket connection established
 [ 2024-10-19 23:56:48 ] -  [32minfo[39m -  WebSocket connection established
 [ 2024-10-19 23:57:20 ] -  [32minfo[39m -  WEB_SOCKET_SERVER | Starting WebSocket server
+[ 2024-10-20 19:19:19 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 19:19:19 ] -  [32minfo[39m -  WEB_SOCKET_SERVER | Starting WebSocket server
+[ 2024-10-20 19:19:19 ] -  [32minfo[39m -  SERVER | REDIS: Connected to Redis
+[ 2024-10-20 19:19:19 ] -  [32minfo[39m -  SERVER | REDIS: Redis connection is ready to start execution
+[ 2024-10-20 19:19:25 ] -  [32minfo[39m -  WEB_SOCKET_SERVER | connection esthablished
+[ 2024-10-20 19:19:28 ] -  [32minfo[39m -  WebSocket connection closed for [object Object]
+[ 2024-10-20 19:19:53 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 19:19:53 ] -  [32minfo[39m -  WEB_SOCKET_SERVER | Starting WebSocket server
+[ 2024-10-20 19:19:53 ] -  [32minfo[39m -  SERVER | REDIS: Connected to Redis
+[ 2024-10-20 19:19:53 ] -  [32minfo[39m -  SERVER | REDIS: Redis connection is ready to start execution
+[ 2024-10-20 19:20:42 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 19:20:42 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 19:20:42 ] -  [32minfo[39m -  SERVER | REDIS: Connected to Redis
+[ 2024-10-20 19:20:42 ] -  [32minfo[39m -  SERVER | REDIS: Redis connection is ready to start execution
+[ 2024-10-20 19:26:05 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 19:26:06 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 19:26:06 ] -  [32minfo[39m -  SERVER | REDIS: Connected to Redis
+[ 2024-10-20 19:26:06 ] -  [32minfo[39m -  SERVER | REDIS: Redis connection is ready to start execution
+[ 2024-10-20 19:26:28 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 19:26:28 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 19:26:28 ] -  [32minfo[39m -  SERVER | REDIS: Connected to Redis
+[ 2024-10-20 19:26:28 ] -  [32minfo[39m -  SERVER | REDIS: Redis connection is ready to start execution
+[ 2024-10-20 19:27:48 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 19:27:48 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 19:27:48 ] -  [32minfo[39m -  SERVER | REDIS: Connected to Redis
+[ 2024-10-20 19:27:48 ] -  [32minfo[39m -  SERVER | REDIS: Redis connection is ready to start execution
+[ 2024-10-20 19:28:14 ] -  [32minfo[39m -  WebSocket subscribed to 123
+[ 2024-10-20 19:28:39 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 19:28:39 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 19:28:39 ] -  [32minfo[39m -  SERVER | REDIS: Connected to Redis
+[ 2024-10-20 19:28:39 ] -  [32minfo[39m -  SERVER | REDIS: Redis connection is ready to start execution
+[ 2024-10-20 20:01:26 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 20:01:26 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 20:01:52 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 20:01:53 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 20:02:35 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 20:02:35 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 20:04:46 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 20:04:47 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 20:04:50 ] -  [32minfo[39m -  WebSocket subscribed to 123
+[ 2024-10-20 20:04:50 ] -  [32minfo[39m -  Subscribed to Redis channel: 123
+[ 2024-10-20 20:05:05 ] -  [32minfo[39m -  WebSocket subscribed to 123
+[ 2024-10-20 20:06:00 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 20:06:00 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 20:06:07 ] -  [32minfo[39m -  WebSocket subscribed to 123
+[ 2024-10-20 20:06:07 ] -  [32minfo[39m -  Subscribed to Redis channel: 123
+[ 2024-10-20 20:06:51 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 20:06:52 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 20:08:22 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 20:08:22 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 20:08:23 ] -  [32minfo[39m -  Subscribed to Redis channel: 123
+[ 2024-10-20 20:11:10 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 20:11:10 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 20:19:24 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 20:19:24 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 20:19:34 ] -  [32minfo[39m -  Subscribed to Redis channel: 123
+[ 2024-10-20 20:20:26 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 20:20:26 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 20:29:04 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 20:29:04 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 20:31:09 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 20:31:09 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 20:36:45 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 20:36:46 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 20:38:18 ] -  [32minfo[39m -  Subscribed to Redis channel: 123
+[ 2024-10-20 20:39:05 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 20:44:42 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 21:43:25 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 21:47:06 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 21:47:06 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 21:47:12 ] -  [32minfo[39m -  Subscribed to Redis channel: 123
+[ 2024-10-20 21:47:34 ] -  [32minfo[39m -  Subscribed to Redis channel: 4
+[ 2024-10-20 21:50:49 ] -  [32minfo[39m -  WebSocket connection closed for [object Object]
+[ 2024-10-20 21:51:34 ] -  [32minfo[39m -  Subscribed to Redis channel: 123
+[ 2024-10-20 21:52:11 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 21:52:11 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 21:54:33 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 21:54:33 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 22:00:35 ] -  [32minfo[39m -  Subscribed to Redis channel: 123
+[ 2024-10-20 22:03:26 ] -  [32minfo[39m -  WebSocket connection closed for [object Object]
+[ 2024-10-20 22:03:31 ] -  [32minfo[39m -  Subscribed to Redis channel: 123
+[ 2024-10-20 22:06:50 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 22:06:50 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 22:13:58 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 22:15:22 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 22:49:07 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 22:49:07 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 22:49:19 ] -  [32minfo[39m -  Subscribed to Redis channel: 123
+[ 2024-10-20 22:50:34 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 22:50:34 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 22:52:04 ] -  [32minfo[39m -  Subscribed to Redis channel: 123
+[ 2024-10-20 22:53:25 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 22:53:25 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 22:53:30 ] -  [32minfo[39m -  Subscribed to Redis channel: 123
+[ 2024-10-20 22:54:20 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 22:54:20 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 22:54:25 ] -  [32minfo[39m -  Subscribed to Redis channel: 123
+[ 2024-10-20 22:55:24 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 22:55:24 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 22:55:29 ] -  [32minfo[39m -  Subscribed to Redis channel: 123
+[ 2024-10-20 22:56:29 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 22:56:29 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 22:56:34 ] -  [32minfo[39m -  Subscribed to Redis channel: 123
+[ 2024-10-20 22:57:21 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 22:57:21 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 22:57:26 ] -  [32minfo[39m -  Subscribed to Redis channel: 123
+[ 2024-10-20 22:59:08 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 22:59:09 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 23:00:09 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 23:00:09 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 23:00:16 ] -  [32minfo[39m -  Subscribed to Redis channel: 123
+[ 2024-10-20 23:00:30 ] -  [32minfo[39m -  WebSocket connection closed for [object Object]
+[ 2024-10-20 23:01:01 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 23:01:01 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 23:01:07 ] -  [32minfo[39m -  Subscribed to Redis channel: 123
+[ 2024-10-20 23:01:21 ] -  [32minfo[39m -  Subscribed to Redis channel: 123
+[ 2024-10-20 23:02:49 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 23:02:49 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 23:02:57 ] -  [32minfo[39m -  Subscribed to Redis channel: 123
+[ 2024-10-20 23:03:24 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 23:03:24 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 23:04:41 ] -  [32minfo[39m -  Subscribed to Redis channel: 123
+[ 2024-10-20 23:05:01 ] -  [32minfo[39m -  Subscribed to Redis channel: 123
+[ 2024-10-20 23:05:47 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 23:05:47 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 23:07:42 ] -  [32minfo[39m -  Subscribed to Redis channel: 123
+[ 2024-10-20 23:08:16 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 23:08:16 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 23:08:43 ] -  [32minfo[39m -  Subscribed to Redis channel: 123
+[ 2024-10-20 23:08:56 ] -  [32minfo[39m -  Subscribed to Redis channel: 123
+[ 2024-10-20 23:09:45 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 23:09:45 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 23:10:03 ] -  [32minfo[39m -  Subscribed to Redis channel: 123
+[ 2024-10-20 23:10:26 ] -  [32minfo[39m -  Subscribed to Redis channel: 123
+[ 2024-10-20 23:11:07 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 23:11:07 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 23:13:31 ] -  [32minfo[39m -  Subscribed to Redis channel: 123
+[ 2024-10-20 23:13:45 ] -  [32minfo[39m -  Subscribed to Redis channel: 123
+[ 2024-10-20 23:14:30 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 23:14:30 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 23:14:35 ] -  [32minfo[39m -  Subscribed to Redis channel: 123
+[ 2024-10-20 23:14:50 ] -  [32minfo[39m -  Subscribed to Redis channel: 123
+[ 2024-10-20 23:15:27 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 23:15:27 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 23:16:04 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 23:16:04 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 23:16:07 ] -  [32minfo[39m -  Subscribed to Redis channel: 123
+[ 2024-10-20 23:17:02 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 23:17:02 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 23:18:23 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 23:18:23 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 23:20:21 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 23:20:21 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 23:21:39 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 23:21:39 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 23:22:15 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 23:22:15 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 23:22:40 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 23:22:40 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 23:22:57 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 23:22:57 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 23:24:05 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 23:24:05 ] -  [32minfo[39m -  WEB_SOCKET_SERVER |  WebSocket server listening at 3002
+[ 2024-10-20 23:24:44 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 23:24:44 ] -  [32minfo[39m -  WEB_SOCKET_SERVER | WebSocket server listening at 3002
+[ 2024-10-20 23:24:51 ] -  [32minfo[39m -  Subscribed to Redis channel: 123
+[ 2024-10-20 23:25:08 ] -  [32minfo[39m -  Processing order: {"9486688":{"event_id":9282,"l1_expected_price":0.5,"l1_order_quantity":1,"offer_type":"buy"}}
+[ 2024-10-20 23:25:12 ] -  [32minfo[39m -  Subscribed to Redis channel: 123
+[ 2024-10-20 23:25:47 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 23:25:47 ] -  [32minfo[39m -  WEB_SOCKET_SERVER | WebSocket server listening at 3002

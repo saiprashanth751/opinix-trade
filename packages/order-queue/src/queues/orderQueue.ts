@@ -1,6 +1,7 @@
 import { Queue } from "bullmq";
-import getRedisClient from "../config/redisClient";
-let redisClient = getRedisClient();
+import Redis from "ioredis";
+import { RedisManager } from "../classes/RedisManager";
+let redisClient = RedisManager.getInstance() as unknown as Redis;
 export const orderQueue = new Queue("orderQueue", {
   connection: redisClient,
 });
