@@ -52,3 +52,7 @@
 [ 2024-10-20 23:00:43 ] -  [32minfo[39m -  WORKER | Starting order worker
 [ 2024-10-20 23:17:30 ] -  [32minfo[39m -  WORKER | Starting order worker
 [ 2024-10-20 23:25:15 ] -  [32minfo[39m -  Processing order: {"7462230":{"event_id":9282,"l1_expected_price":0.5,"l1_order_quantity":1,"offer_type":"buy"}}
+[ 2024-10-20 23:47:30 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 23:48:10 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 23:52:39 ] -  [32minfo[39m -  WORKER | Starting order worker
+[ 2024-10-20 23:55:48 ] -  [32minfo[39m -  WORKER | Starting order worker

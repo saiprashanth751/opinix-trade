@@ -10,6 +10,10 @@ export class RedisManager {
     this.client.connect();
   }
 
+  public getClient(): RedisClientType {
+    return this.client;
+  }
+
   public static getInstance() {
     if (!this.instance) {
       this.instance = new RedisManager();
@@ -22,7 +26,6 @@ export class RedisManager {
   }
 
   public publishMessage(channel: string, message: WsMessage) {
-    console.log("Publishing message to channel: ", channel);
     this.client.publish(channel, JSON.stringify(message));
   }
 
