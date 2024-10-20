@@ -1,17 +1,6 @@
-import { WebSocketServer } from 'ws';
+import { createWebSocketServer } from "./server/websockerserver";
+import { logger } from "@opinix/logger";
+const port = 3002;
+createWebSocketServer(port);
 
-const wss = new WebSocketServer({ port: 3002 });
-
-wss.on('connection', function connection(ws) {
-  ws.on('error', console.error);
-  console.log("ws connected")
-
-  ws.on('message', function message(data) {
-    console.log('received: %s', data);
-  });
-
-  ws.send('ws connected');
-});
-
-
-export default wss;
+logger.info(`WEB_SOCKET_SERVER | WebSocket server listening at ${port}`);

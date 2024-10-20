@@ -2,9 +2,11 @@ import { addToOrderQueue } from "@repo/order-queue";
 import { AsyncWrapper } from "../../utils/asynCatch";
 import { generateOrderId } from "../../utils/utils";
 import { SuccessResponse } from "../../utils/wrappers/success.res";
-
 import { EOrderType } from "@opinix/types";
 import { Request } from "express";
+import { RedisManager } from "@repo/order-queue";
+
+let redisClient = RedisManager.getInstance();
 type TPlaceOrder = {
   event_id: number;
   l1_expected_price: number;
@@ -26,6 +28,7 @@ export const placeHandler = AsyncWrapper(
       },
     };
     await addToOrderQueue(order);
+    redisClient.publishMessage("123", order);
     let response = new SuccessResponse("Order placed successfully", 201);
     return res.status(201).json(response);
   }
