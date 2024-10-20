@@ -33,7 +33,7 @@ export class Engine {
             this.orderbooks = parsedSnapShot.orderbook.map((o: any) => new Orderbook(o.bids, o.asks, o.lastTradeId, o.currentPrice, o.event));;
             this.balances = new Map(parsedSnapShot.balance);
         } else {
-            const lastTradeId = uuidv4(); // for now assuming this random id as lastTradeId
+            const lastTradeId = 0; // for now assuming this random id as lastTradeId
             this.orderbooks = [new Orderbook([], [], lastTradeId, 0, EXAMPLE_EVENT)]
             // this.setBaseBalances();
         }
