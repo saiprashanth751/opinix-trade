@@ -19,8 +19,8 @@ export const CURRENCY = "INR";
 
 interface UserBalance {
   [key: string]: {
-    available: number; // available for trading
-    locked: number; // locked in open orders
+    available: number;
+    locked: number;
   };
 }
 
@@ -28,10 +28,6 @@ export class Engine {
   private balances: Map<string, UserBalance> = new Map();
   private orderbooks: Orderbook[] = [];
 
-  /**
-   * Snapshot is saved every 3 seconds
-   * If WITH_SNAPSHOT is set, it will load the snapshot from the file
-   */
   constructor() {
     let snapshot = null;
     try {
@@ -50,8 +46,7 @@ export class Engine {
       );
       this.balances = new Map(parsedSnapShot.balance);
     } else {
-      // TODO: replace the lastTradeId with the actual last trade id
-      const lastTradeId = uuidv4(); // for now assuming this random id as lastTradeId
+      const lastTradeId = 0; // for now assuming this random id as lastTradeId
       this.orderbooks = [new Orderbook([], [], lastTradeId, 0, EXAMPLE_EVENT)];
       // this.setBaseBalances();
     }
@@ -67,7 +62,6 @@ export class Engine {
     fs.writeFileSync("./snapshot.json", JSON.stringify(snapshotSnapshot));
   }
 
-  // main processing function for all kinds of tasks
   processOrders({
     message,
     clientId,
@@ -214,7 +208,6 @@ export class Engine {
     }
   }
 
-  // add a new orderbook to the orderbooks array
   addOrderbook(orderbook: Orderbook) {
     this.orderbooks.push(orderbook);
   }
