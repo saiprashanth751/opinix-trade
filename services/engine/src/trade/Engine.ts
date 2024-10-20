@@ -89,16 +89,28 @@ export class Engine {
             },
           });
         } catch (error) {
-          console.log(error);
-          // publish it to the server via redis
-          RedisManager.getInstance().sendToApi(clientId, {
-            type: "ORDER_CANCELLED",
-            payload: {
-              orderId: "",
-              executedQty: 0,
-              remainingQty: 0,
-            },
-          });
+
+
+            console.log("No snapshot found");
+        }
+
+        if (snapshot) {
+            const parsedSnapShot = JSON.parse(snapshot.toString());
+            this.orderbooks = parsedSnapShot.orderbook.map((o: any) => new Orderbook(o.bids, o.asks, o.lastTradeId, o.currentPrice, o.event));;
+            this.balances = new Map(parsedSnapShot.balance);
+        } else {
+            const lastTradeId = 0; // for now assuming this random id as lastTradeId
+            this.orderbooks = [new Orderbook([], [], lastTradeId, 0, EXAMPLE_EVENT)]
+            // this.setBaseBalances();
+        }
+        setInterval(() => {
+            this.saveSnapshot();
+        }, 1000 * 3);
+    }
+    saveSnapshot() {
+        const snapshotSnapshot = {
+            orderbooks: this.orderbooks.map(o => o.getSnapshot()),
+            balances: Array.from(this.balances.entries())
         }
         break;
 

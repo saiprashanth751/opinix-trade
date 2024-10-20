@@ -21,11 +21,11 @@ export class Orderbook {
     bids: Order[];
     asks: Order[];
     market: string;
-    lastTradeId: string;
+    lastTradeId: number;
     currentPrice:number;
 
 
-    constructor(bids: Order[], asks: Order[], lastTradeId: string, currentPrice:number, market: string) {
+    constructor(bids: Order[], asks: Order[], lastTradeId: number, currentPrice:number, market: string) {
         this.market = market;
         this.bids = bids;
         this.asks = asks;
