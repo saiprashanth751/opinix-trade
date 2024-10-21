@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { TEvent } from "@opinix/types";
 
-export const EventCard = ({ event }: { event: TEvent }) => (
-  <div className="rounded-lg shadow-lg p-4 flex flex-col justify-between bg-white">
+export const EventCard = ({ event }: any) => (
+  <div className="rounded-lg shadow-lg p-4 flex flex-col justify-between bg-white over">
     <div className="flex flex-col mb-2">
       <Image
         src={"/assets/event1.png"}
@@ -20,18 +20,18 @@ export const EventCard = ({ event }: { event: TEvent }) => (
           height={200}
         />
         <div className="text-gray-500 text-xs mt-0.5">
-          {event.traders} traders
+          {event?.traders} traders
         </div>
       </div>
     </div>
-    <h3 className="font-semibold mb-4">{event.title}</h3>
+    <h3 className="font-semibold mb-4">{event?.title}</h3>
     {/* TODO: change the min_bet and max_bet with yes or no values ( 19th oct )  */}
     <div className="flex justify-between">
       <button className="bg-blue-100 text-blue-600 px-6 py-2 rounded font-bold">
-        Yes ₹{event.min_bet}
+        Yes ₹{event?.min_bet}
       </button>
       <button className="bg-red-100 text-red-600 px-6 py-2 rounded font-bold">
-        No ₹{event.max_bet}
+        No ₹{event?.max_bet}
       </button>
     </div>
   </div>

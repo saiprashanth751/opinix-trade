@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { SessionProviders } from "@/providers/session-provider";
 import Navbar from "@/components/landing/Appbar/Navbar";
 import { Toaster } from "react-hot-toast";
+import { Providers } from "@/providers/_provider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -31,10 +31,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <SessionProviders>
-        <Navbar />
+        <Providers>
+          <Navbar />
           {children}
-        </SessionProviders>
+        </Providers>
         <Toaster position="top-center" reverseOrder={false} />
       </body>
     </html>

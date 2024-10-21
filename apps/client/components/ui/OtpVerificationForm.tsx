@@ -18,16 +18,16 @@ import {
 import { verifySMSOTPAction } from "@/actions/OTP/validateOtp";
 import { signIn } from "next-auth/react";
 import { toast } from "react-hot-toast";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
+import { useMutation } from "@tanstack/react-query";
 
 interface InputOTPFormProps {
   phoneNumber: string;
 }
 const FormSchema = z.object({
   otp: z.string().min(4, {
-    message: "Your one-time password must be 4 characters.",
+    message: "Invalid OTP",
   }),
 });
 export function InputOTPForm({ phoneNumber }: InputOTPFormProps) {
@@ -38,32 +38,57 @@ export function InputOTPForm({ phoneNumber }: InputOTPFormProps) {
     },
   });
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { isError, isPending } = useMutation({ mutationFn: onSubmit });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
-    setIsLoading(true);
+    try {
+      const isVerified = await verifySMSOTPAction(data.otp, phoneNumber);
 
-    const isVerified = await verifySMSOTPAction(data.otp, phoneNumber);
-    console.log(isVerified);
-    
-    const res = await signIn("credentials", {
-      redirect: false,
-      phoneNumber,
-      isVerified: isVerified.verified,
-    });
-    console.log(res);
+      if (!isVerified.verified) {
+        toast.error("Invalid OTP");
+        return;
+      }
 
-    if (isVerified.verified && res?.ok) {
-      toast.success("User created successfully!");
-      router.push("/");
-    } else {
-      toast.error("Error while creating user!");
+      const res = await signIn("credentials", {
+        redirect: false,
+        phoneNumber,
+        isVerified: isVerified.verified,
+      });
+
+      if (isVerified.verified && res?.ok) {
+        toast.success("User created successfully!");
+        router.push("/");
+      } else {
+        toast.error("Error while creating user!");
+      }
+    } catch (error) {
+      const isVerified = await verifySMSOTPAction(data.otp, phoneNumber);
+
+      if (!isVerified.verified) {
+        toast.error("Invalid OTP");
+        return;
+      }
+
+      const res = await signIn("credentials", {
+        redirect: false,
+        phoneNumber,
+        isVerified: isVerified.verified,
+      });
+
+      if (isVerified.verified && res?.ok) {
+        toast.success("User created successfully!");
+        router.push("/");
+      } else {
+        toast.error("Error while creating user!");
+      }
     }
-
-    setIsLoading(false);
   }
 
+  if (isError) {
+    toast.error(
+      "We're sorry for the inconvenience. Please report this issue to our support team!"
+    );
+  }
   return (
     <Form {...form}>
       <form
@@ -76,12 +101,14 @@ export function InputOTPForm({ phoneNumber }: InputOTPFormProps) {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <InputOTP maxLength={4} {...field}>
+                <InputOTP maxLength={6} {...field}>
                   <InputOTPGroup>
-                    <InputOTPSlot index={0} />
-                    <InputOTPSlot index={1} />
-                    <InputOTPSlot index={2} />
-                    <InputOTPSlot index={3} />
+                    <InputOTPSlot index={0} className="border ml-1 border-slate-500"/>
+                    <InputOTPSlot index={1} className="border ml-1 border-slate-500"/>
+                    <InputOTPSlot index={2} className="border ml-1 border-slate-500"/>
+                    <InputOTPSlot index={3} className="border ml-1 border-slate-500"/>
+                    <InputOTPSlot index={4} className="border ml-1 border-slate-500"/>
+                    <InputOTPSlot index={5} className="border ml-1 border-slate-500"/>
                   </InputOTPGroup>
                 </InputOTP>
               </FormControl>
@@ -89,8 +116,8 @@ export function InputOTPForm({ phoneNumber }: InputOTPFormProps) {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full mt-3" disabled={isLoading}>
-          {!isLoading ? "Submit" : <Loader2 className="animate-spin" />}
+        <Button type="submit" className="w-full mt-3 bg-black text-white" disabled={isPending}>
+          {!isPending ? "Submit" : <Loader2 className="animate-spin" />}
         </Button>
       </form>
     </Form>

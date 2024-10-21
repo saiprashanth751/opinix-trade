@@ -12,15 +12,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import LineChart from "../ui/line-chart";
+import LineChart from "@/components/ui/line-chart";
 import { getEventDetails } from "@/actions/Event/getEventDetails";
 import { ArrowUpDown } from "lucide-react";
-
 import { useSession } from "next-auth/react";
-
-import {toast, Toaster} from "react-hot-toast"
-
-
+import { toast } from "react-hot-toast"
 
 interface OrderBookItem {
   id: string;
@@ -47,9 +43,7 @@ interface OrderBookProps {
 
 export default function OrderBook({ eventId }: OrderBookProps) {
   const {data} = useSession();
-  const [orderBookData, setOrderBookData] = useState<OrderBookData | null>(
-    null
-  );
+  const [orderBookData, setOrderBookData] = useState<OrderBookData | null>(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [yesPrice, setYesPrice] = useState<number>(0);
@@ -58,8 +52,8 @@ export default function OrderBook({ eventId }: OrderBookProps) {
   const [yesProbability, setYesProbability] = useState<number[]>([]);
   const [noProbability, setNoProbability] = useState<number[]>([]);
   const [timeSeries, setTimeSeries] = useState<string[]>([]);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [socket, setSocket] = useState<WebSocket | null>(null);
+
+  const [, setSocket] = useState<WebSocket | null>(null);
   const [side, setSide] = useState<"yes" | "no">("yes");
   const [tradePrice, setTradePrice] = useState("");
   const [tradeQuantity, setTradeQuantity] = useState("");
@@ -69,25 +63,13 @@ export default function OrderBook({ eventId }: OrderBookProps) {
       const eventData = await getEventDetails(eventId);
       setTitle(eventData.title);
       setDescription(eventData.description);
-      const initialOrderbook = eventData.orderBook;
-      setOrderBookData(initialOrderbook);
-
-      if (initialOrderbook?.topPriceYes && initialOrderbook?.topPriceNo) {
-        setYesPrice(initialOrderbook.topPriceYes);
-        setNoPrice(initialOrderbook.topPriceNo);
-        const yesProb = (initialOrderbook.topPriceYes / 10) * 100;
-        const noProb = (initialOrderbook.topPriceNo / 10) * 100;
-        setYesProbability([yesProb]);
-        setNoProbability([noProb]);
-        setTimeSeries([new Date().toLocaleTimeString()]);
-      }
     }
     fetchInitialData();
     
   }, [eventId]);
 
   useEffect(() => {
-    const ws = new WebSocket("ws://localhost:3001");
+    const ws = new WebSocket(process.env.NEXT_PUBLIC_WSS_URL!);
     ws.onopen = () => {
       ws.send(JSON.stringify({ eventId }));
     };
@@ -130,23 +112,23 @@ export default function OrderBook({ eventId }: OrderBookProps) {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white p-4">
+    <div className="min-h-screen p-10">
       <h1 className="text-3xl font-bold text-center mb-6 mt-1">{title}</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="md:col-span-2 bg-black border border-gray-800">
+        <Card className="md:col-span-2 bg-white">
           <CardHeader>
-            <CardTitle className="text-white">Order Book</CardTitle>
+            <CardTitle>Order Book</CardTitle>
           </CardHeader>
           <CardContent>
             <Table>
               <TableHeader>
-                <TableRow className="border-b border-gray-800">
-                  <TableHead className="text-white font-sans">PRICE</TableHead>
-                  <TableHead className="text-white font-sans">
+                <TableRow className="border-b ">
+                  <TableHead className=" font-sans">PRICE</TableHead>
+                  <TableHead className=" font-sans">
                     QTY AT YES
                   </TableHead>
-                  <TableHead className="text-white font-sans">PRICE</TableHead>
-                  <TableHead className="text-white font-sans">
+                  <TableHead className=" font-sans">PRICE</TableHead>
+                  <TableHead className=" font-sans">
                     QTY AT NO
                   </TableHead>
                 </TableRow>
@@ -233,9 +215,9 @@ export default function OrderBook({ eventId }: OrderBookProps) {
             </Table>
           </CardContent>
         </Card>
-        <Card className="bg-black border border-gray-800">
+        <Card className="bg-white border md:fixed md:right-10 md:w-[30%]">
           <CardHeader>
-            <CardTitle className="text-white">Place Order</CardTitle>
+            <CardTitle className="">Place Order</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex justify-between mb-4">
@@ -262,7 +244,7 @@ export default function OrderBook({ eventId }: OrderBookProps) {
               <div>
                 <label
                   htmlFor="trade-price"
-                  className="block text-sm font-medium text-white"
+                  className="block text-sm font-medium "
                 >
                   Price
                 </label>
@@ -271,14 +253,14 @@ export default function OrderBook({ eventId }: OrderBookProps) {
                   type="number"
                   value={tradePrice}
                   onChange={(e) => setTradePrice(e.target.value)}
-                  className="mt-1 bg-gray-900 text-white border-gray-700"
+                  className="mt-1 "
                 />
                 <p className="text-sm text-gray-400">0 qty available</p>
               </div>
               <div>
                 <label
                   htmlFor="trade-quantity"
-                  className="block text-sm font-medium text-white"
+                  className="block text-sm font-medium "
                 >
                   Quantity
                 </label>
@@ -287,7 +269,7 @@ export default function OrderBook({ eventId }: OrderBookProps) {
                   type="number"
                   value={tradeQuantity}
                   onChange={(e) => setTradeQuantity(e.target.value)}
-                  className="mt-1 bg-gray-900 text-white border-gray-700"
+                  className="mt-1 "
                 />
               </div>
               <div className="flex justify-between">
@@ -304,7 +286,7 @@ export default function OrderBook({ eventId }: OrderBookProps) {
               </div>
               <Button
                 onClick={handleTrade}
-                className={`w-full text-white ${
+                className={`w-full text-white  ${
                   side === "yes"
                     ? "bg-blue-500 hover:bg-blue-600"
                     : "bg-red-500 hover:bg-red-600"
@@ -317,16 +299,16 @@ export default function OrderBook({ eventId }: OrderBookProps) {
         </Card>
       </div>
 
-      <Card className="mt-8 bg-black border border-gray-800">
+      <Card className="mt-8 bg-white md:w-[66%]">
         <CardHeader>
-          <CardTitle className="text-white flex items-center justify-between">
+          <CardTitle className=" flex items-center justify-between">
             Probability Chart
             <Button
               onClick={() => setShowYesData(!showYesData)}
-              className={
-                showYesData
+              className={`text-white
+                ${showYesData
                   ? "bg-blue-600 hover:bg-blue-700"
-                  : "bg-red-600 hover:bg-red-700"
+                  : "bg-red-600 hover:bg-red-700"}`
               }
             >
               <ArrowUpDown className="mr-2 h-4 w-4" />
@@ -345,15 +327,14 @@ export default function OrderBook({ eventId }: OrderBookProps) {
         </CardContent>
       </Card>
 
-      <Card className="mt-8 bg-black border border-gray-800">
+      <Card className="mt-8 bg-white">
         <CardHeader>
-          <CardTitle className="text-white">Event Overview</CardTitle>
+          <CardTitle className="">Event Overview</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-gray-300">{description}</p>
         </CardContent>
       </Card>
-      <Toaster position="top-center"/>
     </div>
   );
 }

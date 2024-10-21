@@ -9,7 +9,7 @@ export const verifySMSOTPAction = async (otp: string, phoneNumber: string) => {
         otp,
       },
     });
-    console.log(otpData);
+    // console.log("otpData", otpData);
     if(otpData?.isVerified){
       return  { verified: true, message: "User Already Exists" };
     }

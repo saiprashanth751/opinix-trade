@@ -31,12 +31,12 @@ export const Navbar = () => {
   );
 
   return (
-    <nav className="py-3 px-2 border">
-      <div className="container mx-auto flex items-center justify-between">
+    <nav className="py-3 px-2 border sticky top-0 z-50 bg-gray-100">
+      <div className="container mx-auto flex items-center justify-between sticky">
         {/* Logo */}
         <div className="flex items-center">
           <Link href={"/"}>
-            <button onClick={() => {}}>
+            <button onClick={() => { }}>
               <div className="text-2xl font-semibold mr-5">OpiniX</div>
             </button>
           </Link>

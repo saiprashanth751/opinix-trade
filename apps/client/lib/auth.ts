@@ -53,10 +53,11 @@ export const authOptions = {
             },
           },
         });
-        console.log("isUserExists...", isUserExists);
+        // console.log("isUserExists...", isUserExists);
         
         // if user is not verified by twillio
         const isUserVerified = isUserExists?.OTP[0].isVerified;
+        // console.log("isUserVerified", isUserVerified);
         
         if(isUserExists){
           return {
@@ -94,7 +95,7 @@ export const authOptions = {
   ],
   callbacks: {
     async signIn({ user, credentials }) {
-      console.log("Singin....", user);
+      // console.log("Singin....", user);
       
       if (!user.isVerified) {
         return false;

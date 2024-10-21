@@ -6,17 +6,7 @@ export async function getEventDetails(eventId: string) {
     const event = await prisma.event.findUnique({
       where: {
         id: eventId,
-      },
-      include: {
-        orderBook: {
-          include: {
-            yes: true,
-            no: true,
-    
-          },
-        },
-      },
-    });
+      }});
    
     if (!event) {
       throw new Error("Event not found");
