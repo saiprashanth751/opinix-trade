@@ -7,6 +7,7 @@ export class RedisManager {
 
   constructor() {
     this.client = createClient();
+    console.log("Redis connected log inside Redis Manager")
     this.client.connect();
   }
 
