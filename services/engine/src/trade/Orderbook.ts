@@ -35,6 +35,7 @@ export class Orderbook {
 
     addOrder(order: Order) {
         if (order.side === "yes") {
+            console.log(order)
             // matchBid
             const { executedQty, fills } = this.matchBid(order);
             // fillBid
@@ -69,7 +70,6 @@ export class Orderbook {
         }
     }
 
-    // @ts-ignore Todo; remove ts-ignore
     matchBid(order: Order): { fills: Fill[]; executedQty: number } {
         const fills: Fill[] = [];
         let executedQty = 0;
@@ -93,19 +93,19 @@ export class Orderbook {
                 });
             }
 
-            //   if order left after particially filled
-            for (let i = 0; i < this.asks.length; i++) {
-                if (this.asks[i]?.filled === this.asks[i]?.quantity) {
-                    this.asks.splice(i, 1);
-                    i--;
-                }
-            }
-
-            return {
-                fills,
-                executedQty,
-            };
         }
+        //   if order left after particially filled
+        for (let i = 0; i < this.asks.length; i++) {
+            if (this.asks[i]?.filled === this.asks[i]?.quantity) {
+                this.asks.splice(i, 1);
+                i--;
+            }
+        }
+        console.log("executedQty", executedQty, " fills", fills)
+        return {
+            fills,
+            executedQty,
+        };
     }
 
     // @ts-ignore Todo; remove ts-ignore
@@ -130,17 +130,17 @@ export class Orderbook {
                     marketOrderId: this.bids[i]?.orderId!,
                 });
             }
-            for (let i = 0; i < this.bids.length; i++) {
-                if (this.bids[i]?.filled === this.bids[i]?.quantity) {
-                    this.bids.splice(i, 1);
-                    i--;
-                }
-            }
-            return {
-                fills,
-                executedQty,
-            };
         }
+        for (let i = 0; i < this.bids.length; i++) {
+            if (this.bids[i]?.filled === this.bids[i]?.quantity) {
+                this.bids.splice(i, 1);
+                i--;
+            }
+        }
+        return {
+            fills,
+            executedQty,
+        };
     }
 
     getMarketDepth() {

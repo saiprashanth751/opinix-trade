@@ -15,10 +15,11 @@ type TPlaceOrder = {
 };
 export const placeHandler = AsyncWrapper(
   async (req: Request<{}, {}, TPlaceOrder>, res) => {
-    const { event_id, l1_expected_price, l1_order_quantity, offer_type } =
-      req.body;
-    let orderId = generateOrderId();
+    const { event_id, l1_expected_price, l1_order_quantity, offer_type } = req.body;
 
+    const orderId = generateOrderId();
+    console.log(orderId);
+    
     const order = {
       [orderId]: {
         event_id: event_id,
@@ -28,7 +29,7 @@ export const placeHandler = AsyncWrapper(
       },
     };
     await addToOrderQueue(order);
-    redisClient.publishMessage("123", order);
+    redisClient.publishMessage(orderId, order);
     let response = new SuccessResponse("Order placed successfully", 201);
     return res.status(201).json(response);
   }

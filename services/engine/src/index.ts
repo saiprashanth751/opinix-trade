@@ -8,18 +8,19 @@
  6. Test Cases
 */
 
-import { createClient } from "@repo/order-queue";
+import { RedisManager } from "@repo/order-queue";
 import { Engine } from "./trade/Engine";
+import {Orderbook} from "./trade/Orderbook"
 
 
 async function main() {
     const engine = new Engine(); 
-    const redisClient = createClient();
-    await redisClient.connect();
+    const redis = new RedisManager();
+    const redisClient = redis.getClient();
     console.log("connected to redis");
 
     while (true) {
-        const response = await redisClient.rPop("messages" as string)
+        const response = await redisClient.lPop("ORDER_QUEUE")
         if (!response) {
 
         }  else {
@@ -30,3 +31,6 @@ async function main() {
 }
 
 main();
+
+
+export {Engine, Orderbook};
