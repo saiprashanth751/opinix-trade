@@ -1,6 +1,6 @@
 "use client"
+import { Login } from '@/components/landing/Auth/Singin';
 import React from 'react';
-import { Login } from '../../../../components/landing/Auth/Singin';
 
 const Page = () => {
   return (

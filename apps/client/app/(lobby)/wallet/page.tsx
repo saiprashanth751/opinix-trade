@@ -15,6 +15,7 @@ const Page = () => {
           <WalletCards
             icon="/assets/wallet-deposit.png"
             name="Deposit"
+            url="/wallet/deposit"
             amount={0}
             btnName="Recharge"
             btnOnClick={() => {}}
@@ -22,6 +23,7 @@ const Page = () => {
           <WalletCards
             icon="/assets/wallet-withdraw.png"
             name="Withdraw"
+            url="/wallet/withdraw"
             amount={0}
             btnName="Withdraw"
             btnOnClick={() => {}}

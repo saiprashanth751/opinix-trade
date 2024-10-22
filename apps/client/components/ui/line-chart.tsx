@@ -24,7 +24,7 @@ const LineChart: React.FC<LineChartProps> = ({ labels, data, borderColor }) => {
     labels,
     datasets: [
       {
-        label: 'Sample Data',
+        label: 'Probability',
         data,
         fill: true,
         borderColor: borderColor,

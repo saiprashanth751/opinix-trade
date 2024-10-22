@@ -10,13 +10,12 @@ const twilioClient = twilio(
 export const sendSMSOTP = async (phoneNumber: string) => {
   if(phoneNumber.length <= 10)return { success: false, message: "Failed to update OTP" };
   try {
-    const OTP = Math.floor(1000 + Math.random() * 9000).toString();
+    const OTP = Math.floor(100000 + Math.random() * 9000).toString();
     
     // Check if OTP already exists
     const isOtpDataExists = await prisma.oTP.findUnique({
       where: { otpID: phoneNumber },
     });
-    console.log("isOtpDataExists", isOtpDataExists);
     
     if (isOtpDataExists) {
       // Update existing OTP
@@ -27,13 +26,11 @@ export const sendSMSOTP = async (phoneNumber: string) => {
           expiresAt: new Date(Date.now() + 10 * 60 * 1000) 
         },
       });
-      console.log("updateOtp", updateOtp);
       
       if (!updateOtp) {
         return { success: false, message: "Failed to update OTP" };
       } else {
         const res = await sendTwillioMsg(OTP, phoneNumber)
-        console.log("res in update", res)
         return res;
       }
     } else {
@@ -45,13 +42,11 @@ export const sendSMSOTP = async (phoneNumber: string) => {
           expiresAt: new Date(Date.now() + 10 * 60 * 1000),
         },
       });
-      console.log("newOTP", newOTP);
       
       if (!newOTP) {
         return { success: false, message: "Failed to create OTP" };
       }
       const res = await sendTwillioMsg(OTP, phoneNumber)
-      console.log("res in new otp", res)
       return res;
     }
   } catch (error) {
@@ -68,7 +63,7 @@ async function sendTwillioMsg(OTP: string, phoneNumber: string) {
       from: process.env.TWILIO_NUMBER,
       to: phoneNumber,
     });
-    console.log(message);
+    console.log(message); // just to get rid of linting error
     
     return { success: true, message: "send OTP" };
   } catch (error) {
