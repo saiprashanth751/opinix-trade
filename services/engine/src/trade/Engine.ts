@@ -47,6 +47,7 @@ export class Engine {
       this.saveSnapshot();
     }, 1000 * 3);
   }
+
   saveSnapshot() {
     const snapshotSnapshot = {
       orderbooks: this.orderbooks.map((o) => o.getSnapshot()),

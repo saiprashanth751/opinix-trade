@@ -1,7 +1,7 @@
 import { logger } from "@opinix/logger";
-import { RedisClientType, createClient } from "redis";
 import { RedisManager } from "../classes/RedisManager";
-
+import { Engine } from "@repo/engine";
+import { CREATE_ORDER, MessageFromApi } from "@opinix/types";
 let redisClient = RedisManager.getInstance().getClient();
 
 const QUEUE_NAME = "ORDER_QUEUE";
@@ -21,7 +21,15 @@ export const processOrderQueue = async () => {
     try {
       const order = await redisClient.lPop(QUEUE_NAME);
       if (order) {
-        logger.info(`Processing order: ${JSON.stringify(order)}`);
+        const orderObj: MessageFromApi = JSON.parse(order);
+        // const engine = new Engine();
+        const userid =
+          orderObj.type == CREATE_ORDER ? orderObj.data.userId : null;
+        if (!userid) {
+          logger.error(`Error processing order: userId not found`);
+          continue;
+        }
+        // engine.processOrders({ message: orderObj, clientId: userid });
       }
     } catch (err) {
       if (err instanceof Error) {
