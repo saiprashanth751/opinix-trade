@@ -10,6 +10,7 @@
 
 import { createClient } from "@repo/order-queue";
 import { Engine } from "./trade/Engine";
+import {Orderbook} from "./trade/Orderbook"
 
 
 async function main() {
@@ -30,3 +31,6 @@ async function main() {
 }
 
 main();
+
+
+export {Engine, Orderbook};
