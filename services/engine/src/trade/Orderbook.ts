@@ -35,7 +35,7 @@ export class Orderbook {
 
     addOrder(order: Order) {
         if (order.side === "yes") {
-            console.log(order)
+            console.log("order in orderbook", order)
             // matchBid
             const { executedQty, fills } = this.matchBid(order);
             // fillBid
@@ -75,7 +75,7 @@ export class Orderbook {
         let executedQty = 0;
 
         // TODO: matching bid with sorted asks array
-        for (let i = 0; i > this.asks.length; i++) {
+        for (let i = 0; i < this.asks.length; i++) {
             if (this.asks[i]?.price! <= order.price && executedQty < order.quantity) {
                 const filledQty = Math.min(
                     order.quantity - executedQty,

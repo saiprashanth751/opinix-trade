@@ -7,7 +7,7 @@ export const userZodSchema = z.object({
 });
 
 export const intiateOrderZodSchema = z.object({
-  event_id: z.number(),
+  event_id: z.string(),
   l1_expected_price: z.number().min(0.1, {
     message: "Order price must be a positive integer",
   }),

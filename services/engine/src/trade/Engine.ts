@@ -12,9 +12,10 @@ import {
 } from "@opinix/types";
 import { Fill, Order, Orderbook } from "./Orderbook";
 import { RedisManager } from "@repo/order-queue";
-export const EXAMPLE_EVENT =
-  "bitcoin-to-be-priced-at-6811470-usdt-or-more-at-0735-pm";
+
+export const EXAMPLE_EVENT = "bitcoin-to-be-priced-at-6811470-usdt-or-more-at-0735-pm";
 export const CURRENCY = "INR";
+
 interface UserBalance {
   available: number;
   locked: number;
@@ -83,6 +84,9 @@ export class Engine {
             },
           });
           console.log("Pushed ORDER_PLACED into REDIS");
+          console.log("Asked after ");
+          console.log(`user ${message.data.userId} balanace`, this.balances.get(message.data.userId));
+
         } catch (error) {
           console.log(error);
           // publish it to the server via redis
@@ -210,6 +214,8 @@ export class Engine {
     orderId: string;
   } {
     const orderbook = this.orderbooks.find((o) => o.market === market);
+    console.log("orderbook", orderbook);
+
     if (!orderbook) {
       throw new Error("No orderbook found");
     }
@@ -225,10 +231,15 @@ export class Engine {
     };
     const { fills, executedQty } = orderbook.addOrder(order);
     this.updateBalance(userId, side, fills);
+
     this.createDbTrades(fills, market, userId);
+
     this.updateDbOrders(order, executedQty, fills, market);
+
     this.publisWsDepthUpdates(fills, price, side, market);
+
     this.publishWsTrades(fills, userId, market);
+
     return { executedQty, fills, orderId: order.orderId };
   }
   checkAndLockFunds(
@@ -238,73 +249,61 @@ export class Engine {
     quantity: number
   ) {
     if (side === "yes") {
-      console.log(userId);
-      console.log(price);
-      console.log(this.balances.get(userId));
       if ((this.balances.get(userId)?.available || 0) < quantity * price) {
-        throw new Error("Insufficient funds");
+        throw new Error("Insufficient balance");
       }
       //@ts-ignore
-      this.balances.get(userId).available =
-        this.balances.get(userId)?.available - quantity * price;
+      this.balances.get(userId).available = this.balances.get(userId)?.available - quantity * price;
       //@ts-ignore
-      this.balances.get(userId).locked =
-        this.balances.get(userId)?.locked + quantity * price;
+      this.balances.get(userId).locked = this.balances.get(userId)?.locked + quantity * price;
     } else {
-      console.log("askssss balanace", this.balances.get(userId));
+      console.log(`user ${userId} balanace`, this.balances.get(userId));
 
       if ((this.balances.get(userId)?.locked || 0) < Number(quantity)) {
         throw new Error("Insufficient funds");
       }
       //@ts-ignore
-      this.balances.get(userId).available =
-        this.balances.get(userId)?.available - Number(quantity);
+      this.balances.get(userId).available = this.balances.get(userId)?.available - Number(quantity);
       //@ts-ignore
-      this.balances.get(userId).locked =
-        this.balances.get(userId)?.locked + Number(quantity);
+      this.balances.get(userId).locked = this.balances.get(userId)?.locked + Number(quantity);
     }
   }
   updateBalance(userId: string, side: "yes" | "no", fills: Fill[]) {
+    console.log("----------------Balance updating------------");
     if (side === "yes") {
       fills.forEach((fill) => {
-        // Update quote asset balance
-        //@ts-ignore
-        this.balances.get(fill.otherUserId)[CURRENCY].available =
-          this.balances.get(fill.otherUserId)?.[CURRENCY].available +
-          fill.qty * fill.price;
-        //@ts-ignore
-        this.balances.get(userId)[CURRENCY].locked =
-          this.balances.get(userId)?.[CURRENCY].locked - fill.qty * fill.price;
-        // Update base asset balance
-        //@ts-ignore
-        this.balances.get(fill.otherUserId)[CURRENCY].locked =
-          this.balances.get(fill.otherUserId)?.[CURRENCY].locked - fill.qty;
-        //@ts-ignore
-        this.balances.get(userId)[CURRENCY].available =
-          this.balances.get(userId)?.[CURRENCY].available + fill.qty;
+        const makerBalance = this.balances.get(fill.otherUserId);
+        const takerBalance = this.balances.get(userId);
+        console.log("userBalance in yes update", takerBalance)
+        if (makerBalance && takerBalance) {
+          // Update quote asset balance
+          makerBalance.available = makerBalance.available + fill.qty * fill.price;
+          takerBalance.locked = takerBalance.locked - fill.qty * fill.price;
+
+          // Update base asset balance
+          makerBalance.locked = makerBalance.locked - fill.qty;
+          takerBalance.available = takerBalance.available + fill.qty;
+        }
       });
     } else {
       fills.forEach((fill) => {
-        // Update quote asset balance
-        //@ts-ignore
-        this.balances.get(fill.otherUserId)[CURRENCY].locked =
-          this.balances.get(fill.otherUserId)?.[CURRENCY].locked -
-          fill.qty * fill.price;
-        //@ts-ignore
-        this.balances.get(userId)[CURRENCY].available =
-          this.balances.get(userId)?.[CURRENCY].available +
-          fill.qty * fill.price;
-        // Update base asset balance
-        //@ts-ignore
-        this.balances.get(fill.otherUserId)[CURRENCY].available =
-          this.balances.get(fill.otherUserId)?.[CURRENCY].available + fill.qty;
-        //@ts-ignore
-        this.balances.get(userId)[CURRENCY].locked =
-          this.balances.get(userId)?.[CURRENCY].locked - fill.qty;
+        const takerBalance = this.balances.get(fill.otherUserId);
+        const makerBalance = this.balances.get(userId);
+        console.log("userBalance in no update", takerBalance)
+        if (takerBalance && makerBalance) {
+          // Update quote asset balance
+          takerBalance.locked = takerBalance.locked - fill.qty * fill.price;
+          makerBalance.available = makerBalance.available + fill.qty * fill.price;
+
+          // Update base asset balance
+          takerBalance.available = takerBalance.available + fill.qty;
+          makerBalance.locked = makerBalance.locked - fill.qty;
+        }
       });
     }
   }
   createDbTrades(fills: Fill[], market: string, userId: string) {
+    console.log("-------------Creating DB Trades------------");
     fills.forEach((fill) => {
       RedisManager.getInstance().pushMessage({
         type: TRADE_ADDED,
@@ -325,6 +324,7 @@ export class Engine {
     fills: Fill[],
     market: string
   ) {
+    console.log("-----------DB Orders Updating--------------");
     RedisManager.getInstance().pushMessage({
       type: ORDER_UPDATE,
       data: {
@@ -352,6 +352,7 @@ export class Engine {
     side: "yes" | "no",
     market: string
   ) {
+    console.log("------------Publishing WS Depth--------");
     const orderbook = this.orderbooks.find((o) => o.market === market);
     if (!orderbook) {
       return;
@@ -360,7 +361,7 @@ export class Engine {
     if (side === "yes") {
       const updatedAsks = depth?.asks.filter((x) => fills.map((f) => f.price));
       const updatedBid = depth?.bids.find((x) => x[0] === price.toString());
-      console.log("publish ws depth updates");
+      console.log("----------publishing no ws depth updates--------------");
       RedisManager.getInstance().publishMessage(`depth@${market}`, {
         stream: `depth@${market}`,
         data: {
@@ -373,7 +374,7 @@ export class Engine {
     if (side === "no") {
       const updatedBids = depth?.bids.filter((x) => fills.map((f) => f.price));
       const updatedAsk = depth?.asks.find((x) => x[0] === price.toString());
-      console.log("publish ws depth updates");
+      console.log("----------publishing yes ws depth updates--------------");
       RedisManager.getInstance().publishMessage(`depth@${market}`, {
         stream: `depth@${market}`,
         data: {
@@ -385,6 +386,7 @@ export class Engine {
     }
   }
   publishWsTrades(fills: Fill[], userId: string, market: string) {
+    console.log("------------publishing WsTrades------------");
     fills.forEach((fill) => {
       RedisManager.getInstance().publishMessage(`trade@${market}`, {
         stream: `trade@${market}`,
@@ -431,12 +433,12 @@ export class Engine {
   setBaseBalances() {
     this.balances.set("1", {
       available: 10,
-      locked: 0,
+      locked: 10,
     });
 
     this.balances.set("2", {
       available: 10,
-      locked: 0,
+      locked: 10,
     });
   }
 }

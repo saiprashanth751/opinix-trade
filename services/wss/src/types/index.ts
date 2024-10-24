@@ -1,16 +1,28 @@
-import { WebSocket } from "ws";
 
-export type TWebSocketMessage = {
-  data: [EActionEvent, number];
-};
+export const subscribeOrderbook = "subscribe_orderbook";
+export const unSubscribeOrderbook = "unsubscribe_orderbook";
 
-export enum EActionEvent {
-  SUBSCRIBE = "subscribe_orderbook",
-  UNSUBSCRIBE = "unsubscribe_orderbook",
+export type SubscribeMessage = {
+    method: typeof subscribeOrderbook,
+    events: string[]
 }
 
-export type TSubscription = {
-  [key: string]: Set<WebSocket>;
-};
+export type UnsubscribeMessage = {
+    method: typeof unSubscribeOrderbook,
+    events: string[]
+}
 
-export const subscriptions: TSubscription = {};
+export type IncomingMessage = SubscribeMessage | UnsubscribeMessage;
+
+
+export type DepthUpdateMessage = {
+  type: "depth",
+  data: {
+      b?: [string, string][],
+      a?: [string, string][],
+      id: number,
+      e: "depth"
+  }
+}
+
+export type OutgoingMessage =  DepthUpdateMessage;
