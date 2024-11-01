@@ -1,7 +1,6 @@
 import Image from "next/image";
-import { TEvent } from "@opinix/types";
 
-export const EventCard = ({ event }: any) => (
+export const EventCard = ({ event }) => (
   <div className="rounded-lg shadow-lg p-4 flex flex-col justify-between bg-white over">
     <div className="flex flex-col mb-2">
       <Image

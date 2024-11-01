@@ -5,10 +5,10 @@ import { PortfolioSummary } from "@/components/landing/Portfolio/PortfolioSummar
 
 const Page = () => {
   const [activeTab, setActiveTab] = useState<string>("active");
-  const [returns, setReturns] = useState<number>(-268.65);
-  const [investment, setInvestment] = useState<number>(2096);
-  const [todayReturns, setTodayReturns] = useState<number>(0);
-  const [rank, setRank] = useState<number>(25750902);
+  const [returns, ] = useState<number>(-268.65);
+  const [investment, ] = useState<number>(2096);
+  const [todayReturns, ] = useState<number>(0);
+  const [rank, ] = useState<number>(25750902);
 
   const trades = [
     {

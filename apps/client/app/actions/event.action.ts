@@ -12,7 +12,7 @@ export const getEvents = withServerActionAsyncCatcher<
   null,
   ServerActionReturnType
 >(async () => {
-  let events = await prisma.event.findMany({
+  const events = await prisma.event.findMany({
     select: {
       eventId: true,
       title: true,
