@@ -39,6 +39,12 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+
+# nginx
+nginx.conf
+/nginx.conf.sig
+/nginx.conf.tmp
+
 # Misc
 .DS_Store
 *.pem
