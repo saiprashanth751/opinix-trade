@@ -63,3 +63,7 @@ The system is designed to handle real-time updates and asynchronous order proces
 ## Contributing
 
 We welcome contributions to the project! If you have any ideas or suggestions, please feel free to open an issue or submit a pull request. We are always looking for ways to improve and expand the functionality of the platform.
+
+<a  href="https://github.com/Praashh/opinix-trade/graphs/contributors">
+<img  src="https://contrib.rocks/image?repo=praashh/opinix-trade&max=400&columns=20"  />
+</a>
