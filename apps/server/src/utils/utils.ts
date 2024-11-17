@@ -13,7 +13,7 @@ function randomFourDigitNumber() {
 }
 
 function eventCodeGenerator(): number {
-  return parseInt(Math.random().toString(36).substring(2, 8));
+  return Math.floor(Math.random() * 100000000)
 }
 function slugify(name: string) {
   return (

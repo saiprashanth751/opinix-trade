@@ -1,6 +1,6 @@
 "use client";
 
-import OrderBook from "@/components/landing/Orderbook";
+import TradePage from "@/components/landing/EventTrade/Trade";
 import { useParams } from "next/navigation";
 /*
   TODO: 
@@ -18,7 +18,7 @@ export default function Page() {
   }
   return (
     <div>
-      <OrderBook eventId={eventId} />
+      <TradePage eventId={eventId} />
     </div>
   );
 }

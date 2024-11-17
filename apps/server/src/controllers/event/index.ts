@@ -1,7 +1,3 @@
-/**
- *
- */
-
 import { AsyncWrapper } from "../../utils/asynCatch";
 import { TEvent } from "@opinix/types";
 import { Request, Response } from "express";
@@ -27,10 +23,11 @@ export const createEventHandler = AsyncWrapper(
     let slug = slugify(title);
 
     let eventCode = eventCodeGenerator();
+    
     // check if event already exists using the slug name
     const isEventExists = await prisma.event.findFirst({
       where: {
-        slug: slug,
+        slug:slug,
       },
     });
     if (isEventExists) {
