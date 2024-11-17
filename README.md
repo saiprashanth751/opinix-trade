@@ -9,25 +9,18 @@ This project is a real-time opinion trading platform where users can place bets 
 - [Opinix Trade](#opinix-trade)
   - [Table of Contents](#table-of-contents)
   - [Architecture](#architecture)
-  - [User Architecture Diagram:](#user-architecture-diagram)
-  - [Admin Architecture Diagram](#admin-architecture-diagram)
+  - [Architecture Diagram:](#architecture-diagram)
   - [Components:](#components)
-  - [Current Features](#current-features)
-  - [Future Steps](#future-steps)
-  - [](#)
-
+  - [Features](#features)
+  - [Contributing](#contributing)
 ---
 
 ## Architecture
 
 The system is designed to handle real-time updates and asynchronous order processing for the order book. Below is a breakdown of the architecture:
 
-## User Architecture Diagram:
-![User Diagram](https://utfs.io/f/40G0kRMDo8YboHg5TGraM2wJDUu4Qv6PTdKWHX5yNScboilV)
-
-## Admin Architecture Diagram
-
-![Admin Diagram](https://utfs.io/f/40G0kRMDo8YbOHYutQ49DaVfpnob3ytkRmB2h0jv5XCcIuAM)
+## Architecture Diagram:
+![User Diagram](https://utfs.io/f/40G0kRMDo8Ybl88nziDdG6QCSrVvFodOTgceNxm81943jJbA)
 
 ## Components:
 
@@ -52,7 +45,7 @@ The system is designed to handle real-time updates and asynchronous order proces
 
 ---
 
-## Current Features
+## Features
 
 1. **Real-time Order Book Updates:**
    - The platform provides live updates to all connected clients using WebSockets. When an order is placed, the order book is immediately updated and broadcast to all users.
@@ -62,20 +55,11 @@ The system is designed to handle real-time updates and asynchronous order proces
 
 3. **Portfolio Management:**
    - A new `/portfolio` endpoint will be introduced to track user gains and losses based on the fluctuation of top prices in the order book.
+
+4. **Payment Integration:**
+   - We have integrated Cashfree  to enable secure and seamless payments within the platform.
 ---
 
-## Future Steps
+## Contributing
 
-   
-   
-1. **Payment Integration:**
-   - Add Stripe, Juspay or Razorpay to enable secure and seamless payments within the platform.
-   
-   
-2. **Worker-based Architecture:**
-   - A worker system handles adding and matching orders in the order book, ensuring smooth operation and avoiding race conditions.
-
-**Working on this architecture**
-
-![User Diagram](https://utfs.io/f/40G0kRMDo8Ybl88nziDdG6QCSrVvFodOTgceNxm81943jJbA)
----
+We welcome contributions to the project! If you have any ideas or suggestions, please feel free to open an issue or submit a pull request. We are always looking for ways to improve and expand the functionality of the platform.
