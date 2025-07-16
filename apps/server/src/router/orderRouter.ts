@@ -5,4 +5,5 @@ import { placeHandler } from "../controllers/order";
 const orderRouter = Router();
 
 orderRouter.post("/initiate", initiateOrderValidator, placeHandler);
+
 export { orderRouter };
