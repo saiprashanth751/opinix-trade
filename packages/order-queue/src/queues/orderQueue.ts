@@ -1,8 +1,8 @@
 import { logger } from "@opinix/logger";
 import { RedisManager } from "../classes/RedisManager";
+import { Engine } from "@repo/engine";
 import { CREATE_ORDER, MessageFromApi } from "@opinix/types";
-let redisClient = RedisManager.getInstance().etClient();
-// import { Engine } from "@repo/engine";
+let redisClient = RedisManager.getInstance().getClient();
 
 const QUEUE_NAME = "ORDER_QUEUE";
 
