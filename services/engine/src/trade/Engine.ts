@@ -56,6 +56,8 @@ export class Engine {
     };
     fs.writeFileSync("./snapshot.json", JSON.stringify(snapshotSnapshot));
   }
+
+  
   processOrders({
     message,
     clientId,
