@@ -57,7 +57,7 @@ export class Engine {
     fs.writeFileSync("./snapshot.json", JSON.stringify(snapshotSnapshot));
   }
 
-  
+  // PROCESS ORDERS
   processOrders({
     message,
     clientId,
@@ -201,6 +201,8 @@ export class Engine {
         break;
     }
   }
+//END OF PROCESS ORDERS
+  
   addOrderbook(orderbook: Orderbook) {
     this.orderbooks.push(orderbook);
   }
