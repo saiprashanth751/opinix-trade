@@ -206,6 +206,8 @@ export class Engine {
   addOrderbook(orderbook: Orderbook) {
     this.orderbooks.push(orderbook);
   }
+
+  
   createOrders(
     market: string,
     price: number,
@@ -246,6 +248,8 @@ export class Engine {
 
     return { executedQty, fills, orderId: order.orderId };
   }
+
+  
   checkAndLockFunds(
     side: "yes" | "no",
     userId: string,
@@ -272,6 +276,8 @@ export class Engine {
       this.balances.get(userId).locked = this.balances.get(userId)?.locked + Number(quantity);
     }
   }
+
+  
   updateBalance(userId: string, side: "yes" | "no", fills: Fill[]) {
     console.log("----------------Balance updating------------");
     if (side === "yes") {
@@ -306,6 +312,8 @@ export class Engine {
       });
     }
   }
+
+  
   createDbTrades(fills: Fill[], market: string, userId: string) {
     console.log("-------------Creating DB Trades------------");
     fills.forEach((fill) => {
@@ -322,6 +330,8 @@ export class Engine {
       });
     });
   }
+
+  
   updateDbOrders(
     order: Order,
     executedQty: number,
@@ -350,6 +360,8 @@ export class Engine {
       });
     });
   }
+
+  
   publisWsDepthUpdates(
     fills: Fill[],
     price: number,
@@ -389,6 +401,8 @@ export class Engine {
       });
     }
   }
+
+  
   publishWsTrades(fills: Fill[], userId: string, market: string) {
     console.log("------------publishing WsTrades------------");
     fills.forEach((fill) => {
@@ -405,6 +419,8 @@ export class Engine {
       });
     });
   }
+
+  
   onRamp(userId: string, amount: number) {
     const userBalance = this.balances.get(userId);
     if (!userBalance) {
@@ -417,6 +433,8 @@ export class Engine {
       userBalance[CURRENCY].available += amount;
     }
   }
+
+  
   sendUpdatedDepthAt(price: string, market: string) {
     const orderbook = this.orderbooks.find((o) => o.market === market);
     if (!orderbook) {
@@ -434,6 +452,8 @@ export class Engine {
       },
     });
   }
+
+  
   setBaseBalances() {
     this.balances.set("1", {
       available: 10,
