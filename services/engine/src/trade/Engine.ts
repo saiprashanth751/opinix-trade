@@ -456,8 +456,14 @@ export class Engine {
   
   setBaseBalances() {
     this.balances.set("1", {
-      available: 10,
-      locked: 10,
+      currency: {
+        available: 10,
+        locked: 10,
+      };
+      assets: {
+        yes: 0,
+          
+      }
     });
 
     this.balances.set("2", {
