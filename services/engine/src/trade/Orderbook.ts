@@ -34,7 +34,7 @@ export class Orderbook {
     }
 
     addOrder(order: Order) {
-        if (order.side === "yes") {
+        if (order.type === "") {
             console.log("order in orderbook", order)
             // matchBid
             const { executedQty, fills } = this.matchBid(order);
